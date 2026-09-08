@@ -407,9 +407,10 @@
           <div><p class="panel-title">Performance Ratio by Direktorat Jenderal (Ticket Group) &times; Channel</p><p class="panel-sub">Top ticket-owning units, share of interactions per channel</p></div>
         </div>
         <canvas id="ticketGroupChart" height="230"></canvas>
+        <p id="ticketGroupNote" style="display:none;font-size:12px;color:var(--ink-3);margin:8px 0 0;">Unit-level ticket breakdown requires raw ticket-level source data, only available for <span id="ticketGroupNoteMonths"></span>. Select one of those months, or "All Period", to see this chart.</p>
       </div>
       <div class="panel" style="grid-column:span 5;">
-        <div class="panel-head"><p class="panel-title">Top 5 Contact Detail Subcategory &middot; All Channels</p></div>
+        <div class="panel-head"><p class="panel-title">Top 5 Contact Categories &middot; All Channel</p></div>
         <div id="top5List"></div>
       </div>
     </div>
@@ -433,6 +434,7 @@
         </div>
         <canvas id="volumeTrendChart" height="150"></canvas>
         <div class="legend" id="volumeLegend"></div>
+        <p id="volumeGranNote" style="display:none;font-size:11px;color:var(--ink-3);margin:6px 0 0;">Day-level detail is only available for <span id="volumeGranNoteMonths"></span>; other months show under Monthly view only.</p>
       </div>
       <div class="grid" style="grid-column:span 3;gap:12px;">
         <div class="panel" style="padding:14px 16px;">
@@ -463,14 +465,14 @@
   <div class="section">
     <div class="section-head">
       <h2><span class="bar"></span>Customer Experience</h2>
-      <p class="desc">Satisfaction, loyalty and effort signals across the period</p>
+      <p class="desc">First contact resolution, complaint handling, escalation and sentiment signals grounded in ticket registers</p>
     </div>
     <div class="grid cols-12">
       <div class="grid" style="grid-column:span 7;gap:10px;grid-template-columns:repeat(3,1fr);" id="cxStats"></div>
       <div class="panel" style="grid-column:span 5;">
         <div class="panel-head"><p class="panel-title">Customer Sentiment Mix</p></div>
         <canvas id="sentimentBar" height="70"></canvas>
-        <p class="panel-title" style="margin:14px 0 6px;font-size:11.5px;">CSAT Trend</p>
+        <p class="panel-title" style="margin:14px 0 6px;font-size:11.5px;">FCR Trend (N-FCR based, Jan–Aug)</p>
         <canvas id="csatTrend" height="60"></canvas>
       </div>
     </div>
@@ -494,16 +496,16 @@
   <div class="section">
     <div class="section-head">
       <h2><span class="bar"></span>Workforce Performance</h2>
-      <p class="desc">Roster, utilization, and agent-level performance ranking</p>
+      <p class="desc">Roster overview, and QA-based performance ranking of the 4 active agents (Agustus 2026 QM snapshot)</p>
     </div>
     <div class="grid cols-12">
       <div class="grid" style="grid-column:span 4;gap:10px;grid-template-columns:repeat(2,1fr);" id="workforceStats"></div>
       <div class="panel" style="grid-column:span 4;">
-        <div class="panel-head"><p class="panel-title">Top Performing Agents</p></div>
+        <div class="panel-head"><p class="panel-title">Top Performance</p><span class="panel-tag">QA score &middot; Agustus 2026</span></div>
         <div id="agentTop5"></div>
       </div>
       <div class="panel" style="grid-column:span 4;">
-        <div class="panel-head"><p class="panel-title">Agents Requiring Coaching</p></div>
+        <div class="panel-head"><p class="panel-title">Bottom Performance</p><span class="panel-tag">QA score &middot; Agustus 2026</span></div>
         <div id="agentBottom5"></div>
       </div>
     </div>
@@ -519,14 +521,16 @@
       <div class="panel">
         <div class="panel-head"><p class="panel-title">Top Contact Reasons (Detail Subcategory)</p></div>
         <canvas id="paretoChart" height="230"></canvas>
+        <p id="paretoNote" style="display:none;font-size:12px;color:var(--ink-3);margin:0;"></p>
       </div>
       <div class="panel">
-        <div class="panel-head"><p class="panel-title">Quality &amp; Compliance</p></div>
+        <div class="panel-head"><p class="panel-title">Quality &amp; Compliance</p><span class="panel-tag">Agustus 2026 QM snapshot</span></div>
         <div style="display:flex;gap:14px;align-items:center;">
           <div id="qaGaugeWrap" style="flex:none;"></div>
           <div style="flex:1;min-width:0;" id="qualityStats"></div>
         </div>
-        <canvas id="qualityTrend" height="60" style="margin-top:10px;"></canvas>
+        <p class="panel-title" style="margin:12px 0 4px;font-size:11.5px;">QM Score by Category</p>
+        <canvas id="qualityTrend" height="60" style="margin-top:2px;"></canvas>
       </div>
       <div class="panel">
         <div class="panel-head"><p class="panel-title">MANAGEMENT ATTENTION</p></div>
@@ -550,7 +554,7 @@
   </div>
 
   <div class="foot">
-    <span>Source: Kemenhub Contact Center &mdash; Dashboard, All Channel, Traffic Call &amp; Tiket Interaksi registers (Jan&ndash;Jul 2026). Sentiment-derived and workforce-quality figures are modeled where source surveys are unavailable.</span>
+    <span>Source: SUMMARY FOR EVALUATION 2026 KEMENHUB.xlsx (Traffic Call, All Channel, Summary Whatsapp/Email/Inbound 2026, Tiket) for Jan&ndash;Aug 2026 aggregates; Tiket CRM Agustus 2026.xlsx (raw ticket register) and PENILAIAN QM SCORE KEMENHUB AGUSTUS 2026.xlsx (quality monitoring) for Agustus 2026 detail. Ticket-level detail (sentiment, contact-reason breakdown, unit&times;channel, ticket status, AHT-ticket/ASA/ACW, agent ranking) has raw-data basis only for Jan, Feb, Mar &amp; Agu 2026 &mdash; other months show that detail as unavailable rather than estimated. No modeled or fabricated figures are shown; CSAT, NPS, Customer Effort Score, Occupancy, Attendance, Schedule Adherence, Coaching Completion and Repeat Error Rate were removed for lack of a source in the supplied data.</span>
     <span id="footStamp"></span>
   </div>
 
@@ -573,7 +577,7 @@
 //# sourceMappingURL=chart.umd.min.js.map
 </script>
 <script>
-var DATA = {"monthly": {"Jan": {"whatsapp": 1839, "email": 574, "inbound": 434, "total": 2847, "mom": null, "call_sl": 0.972972972972973, "scr": 0.972972972972973, "abandon_rate": 0.027027027027026973, "call_in": 444, "accepted": 432, "abandon_calls": 12, "aht_call_sec": 267.722603621373, "yoy_2025_total": 2603, "answer_rate": 0.972972972972973, "ticket_total": 1726, "ticket_closed": 1615, "ticket_reopen": 20, "aht_ticket_sec": 536, "asa_sec": 24, "acw_sec": 3, "fcr": 0.9884125144843569, "csat": 0.9113560053462063, "nps": 52, "ces": 2.08, "occupancy": 0.812, "qa_score": 0.891, "critical_error_rate": 0.0142, "compliance_score": 0.958, "coaching_completion": 0.903, "repeat_error_rate": 0.0437, "schedule_adherence": 0.934, "attendance": 0.965, "sentiment": {"positive": 705, "neutral": 1020, "negative": 1}, "complaint_total": 393, "complaint_resolved": 333, "complaint_resolution_rate": 0.8473282442748091, "maincat": {"Lain - Lain": 229, "Informasi": 1104, "Pengaduan": 393}, "category": {"Salah Sambung": 146, "Progres Tiket": 91, "Penawaran Barang & Jasa": 86, "Surat Pemberitahuan": 75, "Empty Call": 73, "Info Alamat & Nomor Telepon": 54, "Rencana Pengoperasian Kapal (RPK)": 47, "Buku Pelaut": 43, "Angkutan Barang Umum": 34, "Konsultasi Dasar Hukum": 32}, "ticketgroup_channel": {"SPAM|whatsapp": 79, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|whatsapp": 173, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|email": 53, "BIRO KOMUNIKASI & INFORMASI PUBLIK|email": 195, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|whatsapp": 248, "DIREKTORAT JENDERAL PERKERETAAPIAN|inbound": 8, "DIREKTORAT JENDERAL PERKERETAAPIAN|whatsapp": 17, "SPAM|inbound": 87, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|email": 129, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|whatsapp": 110, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|inbound": 92, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|inbound": 208, "BIRO KOMUNIKASI & INFORMASI PUBLIK|whatsapp": 72, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|email": 121, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|inbound": 26, "BIRO KOMUNIKASI & INFORMASI PUBLIK|inbound": 8, "DIREKTORAT JENDERAL PERKERETAAPIAN|email": 11, "SPAM|email": 63, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|email": 4, "BADAN PENGEMBANGAN SDM PERHUBUNGAN|inbound": 1, "BADAN PENGEMBANGAN SDM PERHUBUNGAN|whatsapp": 12, "INSPEKTORAT JENDERAL|whatsapp": 5, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|whatsapp": 2, "INSPEKTORAT JENDERAL|email": 2}, "agent": {"NURHOLIS": 454, "YUSRA MULO S": 462, "M. NIZHOMUL HAMDI": 410, "IIS SOPIATUROHMAH": 400}, "agent_aht": {"NURHOLIS": 604, "YUSRA MULO S": 806, "M. NIZHOMUL HAMDI": 866, "IIS SOPIATUROHMAH": 689}, "escalated": {"not escalated": 1538, "escalated": 188}, "agent_profiles": [{"name": "Iis Sopiaturohmah", "tickets": 400, "aht_sec": 689, "qa_score": 89.7, "schedule_adherence": 91.0, "csat": 87.1, "productivity_index": 93.5}, {"name": "Yusra Mulo S", "tickets": 462, "aht_sec": 806, "qa_score": 85.0, "schedule_adherence": 87.4, "csat": 93.0, "productivity_index": 78.6}, {"name": "M. Nizhomul Hamdi", "tickets": 410, "aht_sec": 866, "qa_score": 94.2, "schedule_adherence": 85.6, "csat": 88.0, "productivity_index": 89.5}, {"name": "Nurholis", "tickets": 454, "aht_sec": 604, "qa_score": 88.7, "schedule_adherence": 96.5, "csat": 89.5, "productivity_index": 89.7}]}, "Feb": {"whatsapp": 2151, "email": 632, "inbound": 383, "total": 3166, "mom": 0.11204776958201612, "call_sl": 0.982051282051282, "scr": 0.982051282051282, "abandon_rate": 0.017948717948717996, "call_in": 390, "accepted": 383, "abandon_calls": 7, "aht_call_sec": 347, "yoy_2025_total": 333, "answer_rate": 0.982051282051282, "ticket_total": 1822, "ticket_closed": 1720, "ticket_reopen": 27, "aht_ticket_sec": 574, "asa_sec": 31, "acw_sec": 3, "fcr": 0.9851811196487377, "csat": 0.9086136335255489, "nps": 52, "ces": 2.11, "occupancy": 0.839, "qa_score": 0.914, "critical_error_rate": 0.0179, "compliance_score": 0.927, "coaching_completion": 0.893, "repeat_error_rate": 0.0415, "schedule_adherence": 0.93, "attendance": 0.978, "sentiment": {"positive": 778, "neutral": 1043, "negative": 1}, "complaint_total": 333, "complaint_resolved": 277, "complaint_resolution_rate": 0.8318318318318318, "maincat": {"Informasi": 1247, "Lain - Lain": 242, "Pengaduan": 333}, "category": {"Salah Sambung": 195, "Mudik Gratis": 167, "Penawaran Barang & Jasa": 114, "Progres Tiket": 107, "Surat Pemberitahuan": 65, "Angkutan Barang Umum": 53, "Rencana Pengoperasian Kapal (RPK)": 52, "Angkutan Barang Berbahaya": 45, "Empty Call": 43, "Info Alamat & Nomor Telepon": 36}, "ticketgroup_channel": {"BIRO KOMUNIKASI & INFORMASI PUBLIK|whatsapp": 129, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|whatsapp": 237, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|whatsapp": 249, "SPAM|email": 105, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|email": 123, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|inbound": 97, "BIRO KOMUNIKASI & INFORMASI PUBLIK|email": 204, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|email": 124, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|inbound": 201, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|email": 53, "BIRO KOMUNIKASI & INFORMASI PUBLIK|inbound": 12, "DIREKTORAT JENDERAL PERKERETAAPIAN|email": 25, "SPAM|inbound": 46, "DIREKTORAT JENDERAL PERKERETAAPIAN|whatsapp": 25, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|whatsapp": 67, "SPAM|whatsapp": 91, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|inbound": 11, "BADAN PENGEMBANGAN SDM PERHUBUNGAN|whatsapp": 4, "DIREKTORAT JENDERAL PERKERETAAPIAN|inbound": 10, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|whatsapp": 2, "BADAN KEBIJAKAN TRANSPORTASI|whatsapp": 1, "INSPEKTORAT JENDERAL|whatsapp": 2, "BADAN KEBIJAKAN TRANSPORTASI|inbound": 1, "INSPEKTORAT JENDERAL|email": 2, "BADAN PENGEMBANGAN SDM PERHUBUNGAN|email": 1}, "agent": {"IIS SOPIATUROHMAH": 439, "NURHOLIS": 436, "YUSRA MULO S": 483, "M. NIZHOMUL HAMDI": 464}, "agent_aht": {"IIS SOPIATUROHMAH": 617, "NURHOLIS": 670, "YUSRA MULO S": 875, "M. NIZHOMUL HAMDI": 853}, "escalated": {"not escalated": 1639, "escalated": 183}, "agent_profiles": [{"name": "Iis Sopiaturohmah", "tickets": 439, "aht_sec": 617, "qa_score": 88.5, "schedule_adherence": 94.0, "csat": 89.7, "productivity_index": 81.6}, {"name": "Yusra Mulo S", "tickets": 483, "aht_sec": 875, "qa_score": 94.2, "schedule_adherence": 86.1, "csat": 84.6, "productivity_index": 94.9}, {"name": "M. Nizhomul Hamdi", "tickets": 464, "aht_sec": 853, "qa_score": 80.5, "schedule_adherence": 91.5, "csat": 89.0, "productivity_index": 83.1}, {"name": "Nurholis", "tickets": 436, "aht_sec": 670, "qa_score": 94.3, "schedule_adherence": 91.6, "csat": 91.8, "productivity_index": 92.9}]}, "Mar": {"whatsapp": 3134, "email": 801, "inbound": 502, "total": 4437, "mom": 0.401452937460518, "call_sl": 0.9109090909090909, "scr": 0.9109090909090909, "abandon_rate": 0.08909090909090911, "call_in": 550, "accepted": 501, "abandon_calls": 49, "aht_call_sec": 259.18874781879, "yoy_2025_total": 801, "answer_rate": 0.9109090909090909, "ticket_total": 2549, "ticket_closed": 2389, "ticket_reopen": 10, "aht_ticket_sec": 511, "asa_sec": 71, "acw_sec": 3, "fcr": 0.9960768928991761, "csat": 0.910363709816819, "nps": 47, "ces": 2.18, "occupancy": 0.817, "qa_score": 0.891, "critical_error_rate": 0.0192, "compliance_score": 0.957, "coaching_completion": 0.843, "repeat_error_rate": 0.0359, "schedule_adherence": 0.908, "attendance": 0.965, "sentiment": {"positive": 1158, "neutral": 1390, "negative": 1}, "complaint_total": 434, "complaint_resolved": 340, "complaint_resolution_rate": 0.783410138248848, "maincat": {"Informasi": 1695, "Lain - Lain": 420, "Pengaduan": 434}, "category": {"Mudik Gratis": 492, "Salah Sambung": 298, "Penawaran Barang & Jasa": 132, "Progres Tiket": 114, "Empty Call": 113, "Surat Pemberitahuan": 104, "Keterlambatan Penerbangan": 79, "Angkutan Barang Umum": 56, "Info Alamat & Nomor Telepon": 46, "Pembatasan Operasional Kendaraan Angkutan Barang": 43}, "ticketgroup_channel": {"DIREKTORAT JENDERAL PERHUBUNGAN DARAT|whatsapp": 420, "SPAM|whatsapp": 220, "BIRO KOMUNIKASI & INFORMASI PUBLIK|whatsapp": 81, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|whatsapp": 158, "DIREKTORAT JENDERAL PERKERETAAPIAN|whatsapp": 133, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|whatsapp": 227, "BADAN PENGEMBANGAN SDM PERHUBUNGAN|whatsapp": 3, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|inbound": 154, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|email": 220, "SPAM|email": 136, "BIRO KOMUNIKASI & INFORMASI PUBLIK|email": 238, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|email": 122, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|email": 60, "SPAM|inbound": 67, "DIREKTORAT JENDERAL PERKERETAAPIAN|email": 24, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|inbound": 157, "BIRO KOMUNIKASI & INFORMASI PUBLIK|inbound": 15, "DIREKTORAT JENDERAL PERKERETAAPIAN|inbound": 66, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|inbound": 34, "BADAN PENGEMBANGAN SDM PERHUBUNGAN|email": 1, "INSPEKTORAT JENDERAL|email": 3, "BADAN KEBIJAKAN TRANSPORTASI|email": 1, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|email": 1, "INSPEKTORAT JENDERAL|whatsapp": 4, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|inbound": 4}, "agent": {"M. NIZHOMUL HAMDI": 513, "YUSRA MULO S": 640, "NURHOLIS": 696, "IIS SOPIATUROHMAH": 591, "IVA AMANDA": 105}, "agent_aht": {"M. NIZHOMUL HAMDI": 804, "YUSRA MULO S": 770, "NURHOLIS": 559, "IIS SOPIATUROHMAH": 793, "IVA AMANDA": 918}, "escalated": {"not escalated": 2302, "escalated": 247}, "agent_profiles": [{"name": "Iis Sopiaturohmah", "tickets": 591, "aht_sec": 793, "qa_score": 84.1, "schedule_adherence": 90.2, "csat": 90.4, "productivity_index": 81.7}, {"name": "Yusra Mulo S", "tickets": 640, "aht_sec": 770, "qa_score": 93.9, "schedule_adherence": 96.5, "csat": 91.6, "productivity_index": 98.0}, {"name": "M. Nizhomul Hamdi", "tickets": 513, "aht_sec": 804, "qa_score": 94.7, "schedule_adherence": 84.8, "csat": 86.7, "productivity_index": 86.3}, {"name": "Nurholis", "tickets": 696, "aht_sec": 559, "qa_score": 93.8, "schedule_adherence": 84.5, "csat": 93.1, "productivity_index": 84.5}]}, "Apr": {"whatsapp": 1712, "email": 779, "inbound": 379, "total": 2870, "mom": -0.35316655397791297, "call_sl": 0.9596977329974811, "scr": 0.9596977329974811, "abandon_rate": 0.04030226700251893, "call_in": 397, "accepted": 381, "abandon_calls": 16, "aht_call_sec": 333, "yoy_2025_total": 2184, "answer_rate": 0.9596977329974811, "ticket_total": 1890, "ticket_closed": 1773, "ticket_reopen": 3, "aht_ticket_sec": 471, "asa_sec": 19, "acw_sec": 3, "fcr": 0.9984126984126984, "csat": 0.9140037007571336, "nps": 52, "ces": 2.29, "occupancy": 0.827, "qa_score": 0.901, "critical_error_rate": 0.0107, "compliance_score": 0.939, "coaching_completion": 0.827, "repeat_error_rate": 0.035, "schedule_adherence": 0.896, "attendance": 0.98, "sentiment": {"positive": 879, "neutral": 1010, "negative": 1}, "complaint_total": 354, "complaint_resolved": 281, "complaint_resolution_rate": 0.7937853107344632, "maincat": {"Pengaduan": 354, "Lain - Lain": 244, "Informasi": 1292}, "category": {"Salah Sambung": 178, "Penawaran Barang & Jasa": 154, "Progres Tiket": 147, "Surat Pemberitahuan": 90, "Empty Call": 58, "Rencana Pengoperasian Kapal (RPK)": 55, "Angkutan Barang Berbahaya": 55, "Angkutan Barang Umum": 51, "Undangan Kegiatan": 50, "Keterlambatan Penerbangan": 47}, "ticketgroup_channel": {"DIREKTORAT JENDERAL PERHUBUNGAN UDARA|email": 209, "SPAM|whatsapp": 85, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|whatsapp": 255, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|email": 148, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|whatsapp": 207, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|whatsapp": 121, "BIRO KOMUNIKASI & INFORMASI PUBLIK|whatsapp": 47, "SPAM|inbound": 53, "SPAM|email": 106, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|inbound": 24, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|inbound": 106, "DIREKTORAT JENDERAL PERKERETAAPIAN|inbound": 1, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|inbound": 178, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|email": 43, "BIRO KOMUNIKASI & INFORMASI PUBLIK|email": 242, "DIREKTORAT JENDERAL PERKERETAAPIAN|email": 15, "INSPEKTORAT JENDERAL|whatsapp": 3, "BADAN PENGEMBANGAN SDM PERHUBUNGAN|whatsapp": 2, "INSPEKTORAT JENDERAL|email": 8, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|whatsapp": 11, "BIRO KOMUNIKASI & INFORMASI PUBLIK|inbound": 7, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|inbound": 3, "BADAN PENGEMBANGAN SDM PERHUBUNGAN|email": 10, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|email": 3, "INSPEKTORAT JENDERAL|inbound": 1, "BADAN KEBIJAKAN TRANSPORTASI|email": 1, "DIREKTORAT JENDERAL PERKERETAAPIAN|whatsapp": 1}, "agent": {"M. NIZHOMUL HAMDI": 502, "NURHOLIS": 431, "YUSRA MULO S": 492, "IIS SOPIATUROHMAH": 465}, "agent_aht": {"M. NIZHOMUL HAMDI": 706, "NURHOLIS": 830, "YUSRA MULO S": 656, "IIS SOPIATUROHMAH": 653}, "escalated": {"not escalated": 1683, "escalated": 207}, "agent_profiles": [{"name": "Iis Sopiaturohmah", "tickets": 465, "aht_sec": 653, "qa_score": 85.9, "schedule_adherence": 95.6, "csat": 85.5, "productivity_index": 78.9}, {"name": "Yusra Mulo S", "tickets": 492, "aht_sec": 656, "qa_score": 93.1, "schedule_adherence": 90.8, "csat": 83.9, "productivity_index": 84.5}, {"name": "M. Nizhomul Hamdi", "tickets": 502, "aht_sec": 706, "qa_score": 94.2, "schedule_adherence": 88.4, "csat": 86.7, "productivity_index": 97.8}, {"name": "Nurholis", "tickets": 431, "aht_sec": 830, "qa_score": 81.5, "schedule_adherence": 88.0, "csat": 83.3, "productivity_index": 95.9}]}, "May": {"whatsapp": 1442, "email": 547, "inbound": 354, "total": 2343, "mom": -0.1836236933797909, "call_sl": 0.9752747252747253, "scr": 0.9752747252747253, "abandon_rate": 0.02472527472527475, "call_in": 364, "accepted": 355, "abandon_calls": 9, "aht_call_sec": 350.678740084009, "yoy_2025_total": 2101, "answer_rate": 0.9752747252747253, "ticket_total": 1454, "ticket_closed": 1338, "ticket_reopen": 5, "aht_ticket_sec": 608, "asa_sec": 29, "acw_sec": 11, "fcr": 0.9965612104539202, "csat": 0.8816130993403255, "nps": 49, "ces": 2.33, "occupancy": 0.812, "qa_score": 0.889, "critical_error_rate": 0.0207, "compliance_score": 0.935, "coaching_completion": 0.82, "repeat_error_rate": 0.0242, "schedule_adherence": 0.939, "attendance": 0.955, "sentiment": {"positive": 464, "neutral": 989, "negative": 1}, "complaint_total": 233, "complaint_resolved": 171, "complaint_resolution_rate": 0.7339055793991416, "maincat": {"Informasi": 1054, "Lain - Lain": 167, "Pengaduan": 233}, "category": {"Penawaran Barang & Jasa": 137, "Salah Sambung": 133, "Progres Tiket": 96, "Angkutan Barang Berbahaya": 68, "Surat Pemberitahuan": 56, "Undangan Kegiatan": 37, "Info Alamat & Nomor Telepon": 36, "Empty Call": 30, "Konsultasi Kode KBLI": 28, "SIUJPT": 28}, "ticketgroup_channel": {"DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|email": 117, "SPAM|whatsapp": 47, "BIRO KOMUNIKASI & INFORMASI PUBLIK|email": 175, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|inbound": 80, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|inbound": 169, "BIRO KOMUNIKASI & INFORMASI PUBLIK|whatsapp": 27, "SPAM|email": 90, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|whatsapp": 160, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|whatsapp": 222, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|email": 54, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|email": 95, "INSPEKTORAT JENDERAL|email": 2, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|whatsapp": 74, "DIREKTORAT JENDERAL PERKERETAAPIAN|email": 34, "SPAM|inbound": 30, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|inbound": 35, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|whatsapp": 12, "BIRO KOMUNIKASI & INFORMASI PUBLIK|inbound": 9, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|inbound": 2, "DIREKTORAT JENDERAL PERKERETAAPIAN|inbound": 2, "BADAN PENGEMBANGAN SDM PERHUBUNGAN|email": 5, "BADAN PENGEMBANGAN SDM PERHUBUNGAN|whatsapp": 8, "DIREKTORAT JENDERAL PERKERETAAPIAN|whatsapp": 1, "INSPEKTORAT JENDERAL|whatsapp": 2, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|email": 1, "BADAN PENGEMBANGAN SDM PERHUBUNGAN|inbound": 1}, "agent": {"YUSRA MULO S": 429, "M. NIZHOMUL HAMDI": 344, "NURHOLIS": 342, "IIS SOPIATUROHMAH": 339}, "agent_aht": {"YUSRA MULO S": 793, "M. NIZHOMUL HAMDI": 908, "NURHOLIS": 755, "IIS SOPIATUROHMAH": 944}, "escalated": {"not escalated": 1287, "escalated": 167}, "agent_profiles": [{"name": "Iis Sopiaturohmah", "tickets": 339, "aht_sec": 944, "qa_score": 95.3, "schedule_adherence": 87.5, "csat": 94.3, "productivity_index": 93.2}, {"name": "Yusra Mulo S", "tickets": 429, "aht_sec": 793, "qa_score": 80.5, "schedule_adherence": 94.8, "csat": 92.7, "productivity_index": 87.7}, {"name": "M. Nizhomul Hamdi", "tickets": 344, "aht_sec": 908, "qa_score": 82.6, "schedule_adherence": 83.9, "csat": 92.5, "productivity_index": 96.3}, {"name": "Nurholis", "tickets": 342, "aht_sec": 755, "qa_score": 95.5, "schedule_adherence": 89.3, "csat": 89.2, "productivity_index": 86.3}]}, "Jun": {"whatsapp": 1753, "email": 751, "inbound": 361, "total": 2865, "mom": 0.2227912932138285, "call_sl": 0.9782608695652174, "scr": 0.9782608695652174, "abandon_rate": 0.021739130434782594, "call_in": 368, "accepted": 360, "abandon_calls": 8, "aht_call_sec": 362.802048558327, "yoy_2025_total": 2547, "answer_rate": 0.9782608695652174, "ticket_total": 1815, "ticket_closed": 1710, "ticket_reopen": 7, "aht_ticket_sec": 500, "asa_sec": 26, "acw_sec": 14, "fcr": 0.9961432506887052, "csat": 0.888452583404382, "nps": 47, "ces": 2.3, "occupancy": 0.859, "qa_score": 0.909, "critical_error_rate": 0.01, "compliance_score": 0.94, "coaching_completion": 0.875, "repeat_error_rate": 0.0448, "schedule_adherence": 0.882, "attendance": 0.964, "sentiment": {"positive": 694, "neutral": 1121, "negative": 0}, "complaint_total": 374, "complaint_resolved": 311, "complaint_resolution_rate": 0.8315508021390374, "maincat": {"Lain - Lain": 234, "Informasi": 1207, "Pengaduan": 374}, "category": {"Salah Sambung": 175, "Penawaran Barang & Jasa": 145, "Progres Tiket": 136, "Surat Pemberitahuan": 122, "Rencana Pengoperasian Kapal (RPK)": 65, "Empty Call": 53, "Angkutan Barang Berbahaya": 46, "Undangan Kegiatan": 35, "Konsultasi Kode KBLI": 34, "Pelayanan Maskapai": 31}, "ticketgroup_channel": {"SPAM|whatsapp": 80, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|email": 150, "SPAM|inbound": 45, "SPAM|email": 108, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|whatsapp": 195, "BIRO KOMUNIKASI & INFORMASI PUBLIK|email": 226, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|email": 177, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|whatsapp": 270, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|email": 62, "BIRO KOMUNIKASI & INFORMASI PUBLIK|whatsapp": 54, "BIRO KOMUNIKASI & INFORMASI PUBLIK|inbound": 5, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|whatsapp": 85, "DIREKTORAT JENDERAL PERKERETAAPIAN|inbound": 3, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|inbound": 89, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|inbound": 190, "BADAN PENGEMBANGAN SDM PERHUBUNGAN|whatsapp": 10, "INSPEKTORAT JENDERAL|email": 5, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|email": 1, "BADAN KEBIJAKAN TRANSPORTASI|email": 1, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|inbound": 17, "DIREKTORAT JENDERAL PERKERETAAPIAN|email": 28, "INSPEKTORAT JENDERAL|whatsapp": 3, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|whatsapp": 2, "DIREKTORAT JENDERAL PERKERETAAPIAN|whatsapp": 4, "BADAN PENGEMBANGAN SDM PERHUBUNGAN|email": 5}, "agent": {"NURHOLIS": 551, "IIS SOPIATUROHMAH": 247, "YUSRA MULO S": 515, "M. NIZHOMUL HAMDI": 502}, "agent_aht": {"NURHOLIS": 509, "IIS SOPIATUROHMAH": 687, "YUSRA MULO S": 1007, "M. NIZHOMUL HAMDI": 806}, "escalated": {"not escalated": 1586, "escalated": 229}, "agent_profiles": [{"name": "Iis Sopiaturohmah", "tickets": 247, "aht_sec": 687, "qa_score": 93.5, "schedule_adherence": 89.3, "csat": 94.8, "productivity_index": 80.1}, {"name": "Yusra Mulo S", "tickets": 515, "aht_sec": 1007, "qa_score": 92.6, "schedule_adherence": 90.4, "csat": 85.5, "productivity_index": 90.5}, {"name": "M. Nizhomul Hamdi", "tickets": 502, "aht_sec": 806, "qa_score": 89.1, "schedule_adherence": 89.3, "csat": 87.5, "productivity_index": 91.8}, {"name": "Nurholis", "tickets": 551, "aht_sec": 509, "qa_score": 88.6, "schedule_adherence": 94.4, "csat": 84.8, "productivity_index": 97.8}]}, "Jul": {"whatsapp": 1858, "email": 779, "inbound": 363, "total": 3000, "mom": 0.04712041884816753, "call_sl": 0.9731903485254692, "scr": 0.9731903485254692, "abandon_rate": 0.02680965147453085, "call_in": 373, "accepted": 363, "abandon_calls": 10, "aht_call_sec": 351.910408335312, "yoy_2025_total": 3621, "answer_rate": 0.9731903485254692, "ticket_total": 1879, "ticket_closed": 1796, "ticket_reopen": 29, "aht_ticket_sec": 500, "asa_sec": 25, "acw_sec": 6, "fcr": 0.9845662586482171, "csat": 0.8985094772792679, "nps": 52, "ces": 2.32, "occupancy": 0.831, "qa_score": 0.911, "critical_error_rate": 0.017, "compliance_score": 0.922, "coaching_completion": 0.873, "repeat_error_rate": 0.0461, "schedule_adherence": 0.892, "attendance": 0.975, "sentiment": {"positive": 555, "neutral": 1324, "negative": 0}, "complaint_total": 372, "complaint_resolved": 342, "complaint_resolution_rate": 0.9193548387096774, "maincat": {"Informasi": 1270, "Pengaduan": 372, "Lain - Lain": 237}, "category": {"Salah Sambung": 174, "Penawaran Barang & Jasa": 151, "Surat Pemberitahuan": 103, "Progres Tiket": 92, "Angkutan Barang Berbahaya": 61, "Konsultasi Kode KBLI": 54, "Empty Call": 54, "Rencana Pengoperasian Kapal (RPK)": 53, "Undangan Kegiatan": 45, "Refund Tiket": 43}, "ticketgroup_channel": {"DIREKTORAT JENDERAL PERHUBUNGAN DARAT|whatsapp": 184, "BIRO KOMUNIKASI & INFORMASI PUBLIK|whatsapp": 59, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|email": 207, "BIRO KOMUNIKASI & INFORMASI PUBLIK|email": 247, "SPAM|email": 98, "DIREKTORAT JENDERAL PERKERETAAPIAN|email": 48, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|whatsapp": 257, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|inbound": 167, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|whatsapp": 102, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA|inbound": 14, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|email": 124, "SPAM|whatsapp": 94, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|inbound": 111, "SPAM|inbound": 45, "BADAN PENGEMBANGAN SDM PERHUBUNGAN|whatsapp": 26, "BIRO KOMUNIKASI & INFORMASI PUBLIK|inbound": 9, "DIREKTORAT JENDERAL PERKERETAAPIAN|whatsapp": 6, "BADAN KEBIJAKAN TRANSPORTASI|email": 3, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|email": 1, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT|email": 55, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|whatsapp": 7, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|inbound": 2, "DIREKTORAT JENDERAL PERKERETAAPIAN|inbound": 6, "INSPEKTORAT JENDERAL|email": 3, "INSPEKTORAT JENDERAL|whatsapp": 2, "BADAN PENGEMBANGAN SDM PERHUBUNGAN|email": 2}, "agent": {"YUSRA MULO S": 744, "M. NIZHOMUL HAMDI": 561, "NURHOLIS": 574}, "agent_aht": {"YUSRA MULO S": 825, "M. NIZHOMUL HAMDI": 765, "NURHOLIS": 693}, "escalated": {"not escalated": 1659, "escalated": 220}, "agent_profiles": [{"name": "Iis Sopiaturohmah", "tickets": 0, "aht_sec": 729, "qa_score": 80.6, "schedule_adherence": 86.6, "csat": 91.3, "productivity_index": 82.1}, {"name": "Yusra Mulo S", "tickets": 744, "aht_sec": 825, "qa_score": 87.9, "schedule_adherence": 87.7, "csat": 90.4, "productivity_index": 96.0}, {"name": "M. Nizhomul Hamdi", "tickets": 561, "aht_sec": 765, "qa_score": 91.1, "schedule_adherence": 91.5, "csat": 92.3, "productivity_index": 82.7}, {"name": "Nurholis", "tickets": 574, "aht_sec": 693, "qa_score": 93.0, "schedule_adherence": 88.6, "csat": 87.4, "productivity_index": 82.6}]}}, "overall": {"whatsapp": 13889, "email": 4863, "inbound": 2776, "total": 21528, "yoy_2025_total": 14190, "call_sl": 0.9646224317566056, "scr": 0.9646224317566056, "abandon_rate": 0.038461538461538464, "call_in": 2886, "accepted": 2775, "abandon_calls": 111, "answer_rate": 0.9615384615384616, "aht_call_sec": 324.614649773973, "aht_ticket_sec": 523, "asa_sec": 29, "acw_sec": 4, "ticket_total": 13135, "ticket_reopen": 101, "fcr": 0.9923106204796346, "sentiment": {"positive": 5233, "neutral": 7897, "negative": 5}, "csat": 0.9018446013528119, "nps": 50, "ces": 2.23, "occupancy": 0.828, "qa_score": 0.901, "critical_error_rate": 0.0157, "compliance_score": 0.94, "coaching_completion": 0.862, "repeat_error_rate": 0.0387, "schedule_adherence": 0.912, "attendance": 0.969, "complaint_total": 2493, "complaint_resolved": 2055, "complaint_resolution_rate": 0.8243080625752106, "ticketgroup": {"SPAM": 1775, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT": 2685, "BIRO KOMUNIKASI & INFORMASI PUBLIK": 2061, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT": 3911, "DIREKTORAT JENDERAL PERKERETAAPIAN": 468, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA": 2031, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA": 58, "BADAN PENGEMBANGAN SDM PERHUBUNGAN": 91, "INSPEKTORAT JENDERAL": 47, "BADAN KEBIJAKAN TRANSPORTASI": 8}, "ticketgroup_channel": {"SPAM": {"whatsapp": 696, "inbound": 373, "email": 706}, "DIREKTORAT JENDERAL PERHUBUNGAN DARAT": {"whatsapp": 1576, "email": 380, "inbound": 729}, "BIRO KOMUNIKASI & INFORMASI PUBLIK": {"email": 1527, "whatsapp": 469, "inbound": 65}, "DIREKTORAT JENDERAL  PERHUBUNGAN LAUT": {"whatsapp": 1728, "email": 913, "inbound": 1270}, "DIREKTORAT JENDERAL PERKERETAAPIAN": {"inbound": 96, "whatsapp": 187, "email": 185}, "DIREKTORAT JENDERAL PERHUBUNGAN UDARA": {"whatsapp": 717, "email": 1153, "inbound": 161}, "DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA": {"email": 11, "whatsapp": 36, "inbound": 11}, "BADAN PENGEMBANGAN SDM PERHUBUNGAN": {"inbound": 2, "whatsapp": 65, "email": 24}, "INSPEKTORAT JENDERAL": {"whatsapp": 21, "email": 25, "inbound": 1}, "BADAN KEBIJAKAN TRANSPORTASI": {"whatsapp": 1, "inbound": 1, "email": 6}}, "maincat": {"Lain - Lain": 1773, "Informasi": 8869, "Pengaduan": 2493}, "category": {"Salah Sambung": 1299, "Penawaran Barang & Jasa": 919, "Progres Tiket": 783, "Mudik Gratis": 659, "Surat Pemberitahuan": 615, "Empty Call": 424, "Angkutan Barang Berbahaya": 275, "Rencana Pengoperasian Kapal (RPK)": 272, "Angkutan Barang Umum": 194, "Info Alamat & Nomor Telepon": 172}, "agent": {"NURHOLIS": 3484, "YUSRA MULO S": 3765, "M. NIZHOMUL HAMDI": 3296, "IIS SOPIATUROHMAH": 2481, "IVA AMANDA": 105}, "hour_dist": {"0": 30, "1": 17, "2": 9, "3": 7, "4": 9, "5": 14, "6": 17, "7": 37, "8": 2083, "9": 1737, "10": 1730, "11": 1554, "12": 730, "13": 1216, "14": 1472, "15": 1213, "16": 864, "17": 143, "18": 38, "19": 50, "20": 36, "21": 28, "22": 38, "23": 63}, "dow_dist": {"Thursday": 2438, "Friday": 2173, "Saturday": 118, "Sunday": 153, "Monday": 3218, "Tuesday": 2487, "Wednesday": 2548}, "agent_aht": {"NURHOLIS": 646, "YUSRA MULO S": 819, "M. NIZHOMUL HAMDI": 808, "IIS SOPIATUROHMAH": 729, "IVA AMANDA": 918}, "agent_profiles": [{"name": "Iis Sopiaturohmah", "tickets": 2481, "aht_sec": 729, "qa_score": 95.8, "schedule_adherence": 92.7, "csat": 86.6, "productivity_index": 92.7, "is_real_data": true}, {"name": "Yusra Mulo S", "tickets": 3765, "aht_sec": 819, "qa_score": 83.8, "schedule_adherence": 96.9, "csat": 89.0, "productivity_index": 97.5, "is_real_data": true}, {"name": "M. Nizhomul Hamdi", "tickets": 3296, "aht_sec": 808, "qa_score": 89.9, "schedule_adherence": 91.4, "csat": 86.3, "productivity_index": 93.6, "is_real_data": true}, {"name": "Nurholis", "tickets": 3484, "aht_sec": 646, "qa_score": 87.7, "schedule_adherence": 88.7, "csat": 86.9, "productivity_index": 90.9, "is_real_data": true}], "supervisor": "Wowo Sugiarto", "total_agents": 9, "active_agents": 4}, "daily": {"2026-01-01": {"total": 35, "whatsapp": 15, "email": 17, "inbound": 3}, "2026-01-02": {"total": 92, "whatsapp": 61, "email": 20, "inbound": 11}, "2026-01-03": {"total": 31, "whatsapp": 8, "email": 13, "inbound": 10}, "2026-01-04": {"total": 45, "whatsapp": 28, "email": 0, "inbound": 17}, "2026-01-05": {"total": 139, "whatsapp": 56, "email": 51, "inbound": 32}, "2026-01-06": {"total": 115, "whatsapp": 51, "email": 25, "inbound": 39}, "2026-01-07": {"total": 124, "whatsapp": 55, "email": 43, "inbound": 26}, "2026-01-08": {"total": 150, "whatsapp": 58, "email": 51, "inbound": 41}, "2026-01-09": {"total": 112, "whatsapp": 33, "email": 41, "inbound": 38}, "2026-01-10": {"total": 3, "whatsapp": 3, "email": 0, "inbound": 0}, "2026-01-11": {"total": 2, "whatsapp": 2, "email": 0, "inbound": 0}, "2026-01-12": {"total": 140, "whatsapp": 61, "email": 41, "inbound": 38}, "2026-01-13": {"total": 140, "whatsapp": 59, "email": 30, "inbound": 51}, "2026-01-14": {"total": 124, "whatsapp": 51, "email": 43, "inbound": 30}, "2026-01-15": {"total": 137, "whatsapp": 45, "email": 53, "inbound": 39}, "2026-01-16": {"total": 13, "whatsapp": 13, "email": 0, "inbound": 0}, "2026-01-17": {"total": 23, "whatsapp": 23, "email": 0, "inbound": 0}, "2026-01-18": {"total": 5, "whatsapp": 5, "email": 0, "inbound": 0}, "2026-01-19": {"total": 165, "whatsapp": 50, "email": 78, "inbound": 37}, "2026-01-20": {"total": 112, "whatsapp": 41, "email": 41, "inbound": 30}, "2026-01-21": {"total": 134, "whatsapp": 53, "email": 38, "inbound": 43}, "2026-01-22": {"total": 165, "whatsapp": 54, "email": 74, "inbound": 37}, "2026-01-23": {"total": 162, "whatsapp": 60, "email": 66, "inbound": 36}, "2026-01-24": {"total": 2, "whatsapp": 2, "email": 0, "inbound": 0}, "2026-01-25": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-01-26": {"total": 176, "whatsapp": 81, "email": 66, "inbound": 29}, "2026-01-27": {"total": 137, "whatsapp": 50, "email": 53, "inbound": 34}, "2026-01-28": {"total": 120, "whatsapp": 69, "email": 30, "inbound": 21}, "2026-01-29": {"total": 122, "whatsapp": 53, "email": 36, "inbound": 33}, "2026-01-30": {"total": 120, "whatsapp": 44, "email": 44, "inbound": 32}, "2026-01-31": {"total": 2, "whatsapp": 2, "email": 0, "inbound": 0}, "2026-02-01": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-02-02": {"total": 202, "whatsapp": 82, "email": 89, "inbound": 31}, "2026-02-03": {"total": 158, "whatsapp": 66, "email": 50, "inbound": 42}, "2026-02-04": {"total": 188, "whatsapp": 75, "email": 47, "inbound": 66}, "2026-02-05": {"total": 182, "whatsapp": 52, "email": 66, "inbound": 64}, "2026-02-06": {"total": 136, "whatsapp": 58, "email": 49, "inbound": 29}, "2026-02-07": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-02-08": {"total": 2, "whatsapp": 2, "email": 0, "inbound": 0}, "2026-02-09": {"total": 182, "whatsapp": 62, "email": 90, "inbound": 30}, "2026-02-10": {"total": 176, "whatsapp": 77, "email": 58, "inbound": 41}, "2026-02-11": {"total": 122, "whatsapp": 56, "email": 47, "inbound": 19}, "2026-02-12": {"total": 162, "whatsapp": 99, "email": 28, "inbound": 35}, "2026-02-13": {"total": 153, "whatsapp": 75, "email": 42, "inbound": 36}, "2026-02-14": {"total": 7, "whatsapp": 7, "email": 0, "inbound": 0}, "2026-02-15": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-02-16": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-02-17": {"total": 9, "whatsapp": 9, "email": 0, "inbound": 0}, "2026-02-18": {"total": 224, "whatsapp": 68, "email": 128, "inbound": 28}, "2026-02-19": {"total": 182, "whatsapp": 85, "email": 61, "inbound": 36}, "2026-02-20": {"total": 148, "whatsapp": 63, "email": 42, "inbound": 43}, "2026-02-21": {"total": 5, "whatsapp": 5, "email": 0, "inbound": 0}, "2026-02-22": {"total": 3, "whatsapp": 3, "email": 0, "inbound": 0}, "2026-02-23": {"total": 177, "whatsapp": 85, "email": 69, "inbound": 23}, "2026-02-24": {"total": 149, "whatsapp": 74, "email": 49, "inbound": 26}, "2026-02-25": {"total": 174, "whatsapp": 64, "email": 61, "inbound": 49}, "2026-02-26": {"total": 193, "whatsapp": 104, "email": 61, "inbound": 28}, "2026-02-27": {"total": 195, "whatsapp": 94, "email": 71, "inbound": 30}, "2026-02-28": {"total": 38, "whatsapp": 38, "email": 0, "inbound": 0}, "2026-03-01": {"total": 148, "whatsapp": 148, "email": 0, "inbound": 0}, "2026-03-02": {"total": 421, "whatsapp": 184, "email": 162, "inbound": 75}, "2026-03-03": {"total": 197, "whatsapp": 110, "email": 33, "inbound": 54}, "2026-03-04": {"total": 221, "whatsapp": 113, "email": 56, "inbound": 52}, "2026-03-05": {"total": 247, "whatsapp": 101, "email": 83, "inbound": 63}, "2026-03-06": {"total": 198, "whatsapp": 102, "email": 57, "inbound": 39}, "2026-03-07": {"total": 33, "whatsapp": 33, "email": 0, "inbound": 0}, "2026-03-08": {"total": 37, "whatsapp": 37, "email": 0, "inbound": 0}, "2026-03-09": {"total": 270, "whatsapp": 89, "email": 136, "inbound": 45}, "2026-03-10": {"total": 209, "whatsapp": 94, "email": 70, "inbound": 45}, "2026-03-11": {"total": 164, "whatsapp": 77, "email": 44, "inbound": 43}, "2026-03-12": {"total": 157, "whatsapp": 73, "email": 49, "inbound": 35}, "2026-03-13": {"total": 174, "whatsapp": 78, "email": 70, "inbound": 26}, "2026-03-14": {"total": 75, "whatsapp": 38, "email": 26, "inbound": 11}, "2026-03-15": {"total": 85, "whatsapp": 42, "email": 19, "inbound": 24}, "2026-03-16": {"total": 183, "whatsapp": 70, "email": 80, "inbound": 33}, "2026-03-17": {"total": 169, "whatsapp": 61, "email": 78, "inbound": 30}, "2026-03-18": {"total": 94, "whatsapp": 54, "email": 26, "inbound": 14}, "2026-03-19": {"total": 96, "whatsapp": 52, "email": 31, "inbound": 13}, "2026-03-20": {"total": 37, "whatsapp": 14, "email": 16, "inbound": 7}, "2026-03-21": {"total": 37, "whatsapp": 16, "email": 16, "inbound": 5}, "2026-03-22": {"total": 78, "whatsapp": 43, "email": 12, "inbound": 23}, "2026-03-23": {"total": 92, "whatsapp": 33, "email": 33, "inbound": 26}, "2026-03-24": {"total": 97, "whatsapp": 52, "email": 29, "inbound": 16}, "2026-03-25": {"total": 176, "whatsapp": 87, "email": 42, "inbound": 47}, "2026-03-26": {"total": 120, "whatsapp": 63, "email": 31, "inbound": 26}, "2026-03-27": {"total": 179, "whatsapp": 83, "email": 54, "inbound": 42}, "2026-03-28": {"total": 61, "whatsapp": 37, "email": 5, "inbound": 19}, "2026-03-29": {"total": 57, "whatsapp": 36, "email": 12, "inbound": 9}, "2026-03-30": {"total": 157, "whatsapp": 85, "email": 44, "inbound": 28}, "2026-03-31": {"total": 169, "whatsapp": 63, "email": 89, "inbound": 17}, "2026-04-01": {"total": 141, "whatsapp": 79, "email": 42, "inbound": 20}, "2026-04-02": {"total": 94, "whatsapp": 30, "email": 49, "inbound": 15}, "2026-04-03": {"total": 3, "whatsapp": 3, "email": 0, "inbound": 0}, "2026-04-04": {"total": 2, "whatsapp": 2, "email": 0, "inbound": 0}, "2026-04-05": {"total": 2, "whatsapp": 2, "email": 0, "inbound": 0}, "2026-04-06": {"total": 185, "whatsapp": 73, "email": 92, "inbound": 20}, "2026-04-07": {"total": 150, "whatsapp": 59, "email": 61, "inbound": 30}, "2026-04-08": {"total": 141, "whatsapp": 79, "email": 45, "inbound": 17}, "2026-04-09": {"total": 132, "whatsapp": 39, "email": 59, "inbound": 34}, "2026-04-10": {"total": 121, "whatsapp": 51, "email": 29, "inbound": 41}, "2026-04-11": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-04-12": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-04-13": {"total": 159, "whatsapp": 38, "email": 91, "inbound": 30}, "2026-04-14": {"total": 169, "whatsapp": 49, "email": 76, "inbound": 44}, "2026-04-15": {"total": 115, "whatsapp": 36, "email": 58, "inbound": 21}, "2026-04-16": {"total": 100, "whatsapp": 41, "email": 45, "inbound": 14}, "2026-04-17": {"total": 143, "whatsapp": 55, "email": 52, "inbound": 36}, "2026-04-18": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-04-19": {"total": 2, "whatsapp": 2, "email": 0, "inbound": 0}, "2026-04-20": {"total": 143, "whatsapp": 53, "email": 78, "inbound": 12}, "2026-04-21": {"total": 153, "whatsapp": 76, "email": 58, "inbound": 19}, "2026-04-22": {"total": 143, "whatsapp": 49, "email": 52, "inbound": 42}, "2026-04-23": {"total": 132, "whatsapp": 49, "email": 53, "inbound": 30}, "2026-04-24": {"total": 115, "whatsapp": 48, "email": 39, "inbound": 28}, "2026-04-25": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-04-26": {"total": 2, "whatsapp": 2, "email": 0, "inbound": 0}, "2026-04-27": {"total": 121, "whatsapp": 57, "email": 39, "inbound": 25}, "2026-04-28": {"total": 120, "whatsapp": 43, "email": 56, "inbound": 21}, "2026-04-29": {"total": 152, "whatsapp": 52, "email": 56, "inbound": 44}, "2026-04-30": {"total": 129, "whatsapp": 46, "email": 61, "inbound": 22}, "2026-05-01": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-05-02": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-05-03": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-05-04": {"total": 182, "whatsapp": 64, "email": 100, "inbound": 18}, "2026-05-05": {"total": 121, "whatsapp": 39, "email": 56, "inbound": 26}, "2026-05-06": {"total": 116, "whatsapp": 42, "email": 39, "inbound": 35}, "2026-05-07": {"total": 139, "whatsapp": 53, "email": 63, "inbound": 23}, "2026-05-08": {"total": 124, "whatsapp": 45, "email": 43, "inbound": 36}, "2026-05-09": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-05-10": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-05-11": {"total": 160, "whatsapp": 65, "email": 65, "inbound": 30}, "2026-05-12": {"total": 127, "whatsapp": 55, "email": 47, "inbound": 25}, "2026-05-13": {"total": 164, "whatsapp": 63, "email": 64, "inbound": 37}, "2026-05-14": {"total": 3, "whatsapp": 3, "email": 0, "inbound": 0}, "2026-05-15": {"total": 3, "whatsapp": 3, "email": 0, "inbound": 0}, "2026-05-16": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-05-17": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-05-18": {"total": 259, "whatsapp": 103, "email": 124, "inbound": 32}, "2026-05-19": {"total": 166, "whatsapp": 71, "email": 55, "inbound": 40}, "2026-05-20": {"total": 147, "whatsapp": 63, "email": 44, "inbound": 40}, "2026-05-21": {"total": 127, "whatsapp": 48, "email": 32, "inbound": 47}, "2026-05-22": {"total": 102, "whatsapp": 45, "email": 32, "inbound": 25}, "2026-05-23": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-05-24": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-05-25": {"total": 150, "whatsapp": 55, "email": 56, "inbound": 39}, "2026-05-26": {"total": 103, "whatsapp": 40, "email": 26, "inbound": 37}, "2026-05-27": {"total": 2, "whatsapp": 2, "email": 0, "inbound": 0}, "2026-05-28": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-05-29": {"total": 148, "whatsapp": 32, "email": 77, "inbound": 39}, "2026-05-30": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-05-31": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-06-01": {"total": 2, "whatsapp": 2, "email": 0, "inbound": 0}, "2026-06-02": {"total": 194, "whatsapp": 63, "email": 96, "inbound": 35}, "2026-06-03": {"total": 131, "whatsapp": 65, "email": 41, "inbound": 25}, "2026-06-04": {"total": 194, "whatsapp": 54, "email": 109, "inbound": 31}, "2026-06-05": {"total": 133, "whatsapp": 49, "email": 40, "inbound": 44}, "2026-06-06": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-06-07": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-06-08": {"total": 153, "whatsapp": 71, "email": 49, "inbound": 33}, "2026-06-09": {"total": 155, "whatsapp": 62, "email": 47, "inbound": 46}, "2026-06-10": {"total": 112, "whatsapp": 54, "email": 44, "inbound": 14}, "2026-06-11": {"total": 131, "whatsapp": 60, "email": 49, "inbound": 22}, "2026-06-12": {"total": 122, "whatsapp": 51, "email": 52, "inbound": 19}, "2026-06-13": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-06-14": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-06-15": {"total": 137, "whatsapp": 50, "email": 49, "inbound": 38}, "2026-06-16": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-06-17": {"total": 153, "whatsapp": 49, "email": 88, "inbound": 16}, "2026-06-18": {"total": 126, "whatsapp": 43, "email": 60, "inbound": 23}, "2026-06-19": {"total": 139, "whatsapp": 57, "email": 60, "inbound": 22}, "2026-06-20": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-06-21": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-06-22": {"total": 182, "whatsapp": 60, "email": 79, "inbound": 43}, "2026-06-23": {"total": 114, "whatsapp": 40, "email": 59, "inbound": 15}, "2026-06-24": {"total": 133, "whatsapp": 57, "email": 49, "inbound": 27}, "2026-06-25": {"total": 120, "whatsapp": 38, "email": 54, "inbound": 28}, "2026-06-26": {"total": 82, "whatsapp": 27, "email": 39, "inbound": 16}, "2026-06-27": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-06-28": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-06-29": {"total": 180, "whatsapp": 76, "email": 84, "inbound": 20}, "2026-06-30": {"total": 174, "whatsapp": 85, "email": 57, "inbound": 32}, "2026-07-01": {"total": 156, "whatsapp": 62, "email": 43, "inbound": 51}, "2026-07-02": {"total": 158, "whatsapp": 54, "email": 72, "inbound": 32}, "2026-07-03": {"total": 142, "whatsapp": 62, "email": 61, "inbound": 19}, "2026-07-04": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-07-05": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-07-06": {"total": 147, "whatsapp": 48, "email": 80, "inbound": 19}, "2026-07-07": {"total": 145, "whatsapp": 46, "email": 73, "inbound": 26}, "2026-07-08": {"total": 144, "whatsapp": 59, "email": 59, "inbound": 26}, "2026-07-09": {"total": 112, "whatsapp": 45, "email": 42, "inbound": 25}, "2026-07-10": {"total": 129, "whatsapp": 56, "email": 54, "inbound": 19}, "2026-07-11": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-07-12": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-07-13": {"total": 185, "whatsapp": 77, "email": 80, "inbound": 28}, "2026-07-14": {"total": 125, "whatsapp": 58, "email": 50, "inbound": 17}, "2026-07-15": {"total": 128, "whatsapp": 35, "email": 66, "inbound": 27}, "2026-07-16": {"total": 107, "whatsapp": 35, "email": 51, "inbound": 21}, "2026-07-17": {"total": 91, "whatsapp": 42, "email": 35, "inbound": 14}, "2026-07-18": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-07-19": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-07-20": {"total": 123, "whatsapp": 30, "email": 70, "inbound": 23}, "2026-07-21": {"total": 123, "whatsapp": 56, "email": 43, "inbound": 24}, "2026-07-22": {"total": 99, "whatsapp": 38, "email": 37, "inbound": 24}, "2026-07-23": {"total": 145, "whatsapp": 59, "email": 51, "inbound": 35}, "2026-07-24": {"total": 126, "whatsapp": 72, "email": 35, "inbound": 19}, "2026-07-25": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-07-26": {"total": 0, "whatsapp": 0, "email": 0, "inbound": 0}, "2026-07-27": {"total": 195, "whatsapp": 80, "email": 90, "inbound": 25}, "2026-07-28": {"total": 94, "whatsapp": 22, "email": 53, "inbound": 19}, "2026-07-29": {"total": 105, "whatsapp": 41, "email": 30, "inbound": 34}, "2026-07-30": {"total": 102, "whatsapp": 45, "email": 35, "inbound": 22}, "2026-07-31": {"total": 118, "whatsapp": 54, "email": 49, "inbound": 15}}, "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"], "targets": {"volume": null, "sl": 0.85, "scr": 0.9, "answer_rate": 0.95, "abandon_rate": 0.1, "aht_sec": 330, "fcr": 0.85, "csat": 0.9, "qa_score": 0.9, "occupancy": 0.85, "asa_sec": 20, "complaint_resolution": 0.9, "nps": 50, "ces": 2.0, "schedule_adherence": 0.9, "attendance": 0.95, "compliance_score": 0.92, "critical_error_rate": 0.02, "coaching_completion": 0.9, "repeat_error_rate": 0.03, "acw_sec": 45}};
+var DATA = {"months":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug"],"detail_months":["Jan","Feb","Mar","Aug"],"monthly":{"Jan":{"whatsapp":1839,"email":574,"inbound":434,"total":2847,"yoy_2025_total":2603,"mom":null,"call_sl":0.972972972972973,"scr":0.972972972972973,"abandon_rate":0.027027027027027,"answer_rate":0.972972972972973,"call_in":444,"accepted":432,"abandon_calls":12,"aht_call_sec":267.722603621373,"ticket_total":1726,"maincat":{"Informasi":1104,"Pengaduan":393,"Lain - Lain":229},"fcr":0.8910776361529548,"nfcr_total":188,"complaint_total":393,"ticket_closed":1615,"ticket_reopen":19,"ticket_open":75,"ticket_on_progress":16,"sentiment":{"positive":705,"neutral":1020,"negative":1},"aht_ticket_sec":535.5,"asa_sec":24.0,"acw_sec":3.0,"category":{"Salah Sambung":146,"Progres Tiket":91,"Penawaran Barang & Jasa":86,"Surat Pemberitahuan":75,"Empty Call":73,"Info Alamat & Nomor Telepon":54,"Rencana Pengoperasian Kapal (RPK)":47,"Buku Pelaut":43,"Angkutan Barang Umum":34,"Konsultasi Dasar Hukum":32},"ticketgroup_channel":{"BADAN PENGEMBANGAN SDM PERHUBUNGAN|inbound":1,"BADAN PENGEMBANGAN SDM PERHUBUNGAN|whatsapp":12,"BIRO KOMUNIKASI & INFORMASI PUBLIK|email":195,"BIRO KOMUNIKASI & INFORMASI PUBLIK|inbound":8,"BIRO KOMUNIKASI & INFORMASI PUBLIK|whatsapp":72,"DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|email":129,"DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|inbound":208,"DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|whatsapp":248,"DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|email":4,"DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|whatsapp":2,"DIREKTORAT JENDERAL PERHUBUNGAN DARAT|email":53,"DIREKTORAT JENDERAL PERHUBUNGAN DARAT|inbound":92,"DIREKTORAT JENDERAL PERHUBUNGAN DARAT|whatsapp":173,"DIREKTORAT JENDERAL PERHUBUNGAN UDARA|email":121,"DIREKTORAT JENDERAL PERHUBUNGAN UDARA|inbound":26,"DIREKTORAT JENDERAL PERHUBUNGAN UDARA|whatsapp":110,"DIREKTORAT JENDERAL PERKERETAAPIAN|email":11,"DIREKTORAT JENDERAL PERKERETAAPIAN|inbound":8,"DIREKTORAT JENDERAL PERKERETAAPIAN|whatsapp":17,"INSPEKTORAT JENDERAL|email":2,"INSPEKTORAT JENDERAL|whatsapp":5,"SPAM|email":63,"SPAM|inbound":87,"SPAM|whatsapp":79},"escalated":{"not escalated":1538,"escalated":188},"agent":{"YUSRA MULO S":462,"NURHOLIS":454,"M. NIZHOMUL HAMDI":410,"IIS SOPIATUROHMAH":400},"agent_aht":{"IIS SOPIATUROHMAH":689,"M. NIZHOMUL HAMDI":866,"NURHOLIS":604,"YUSRA MULO S":806},"complaint_resolved":333,"complaint_resolution_rate":0.8473282442748091,"has_ticket_detail":true,"qa_score":null,"critical_error_rate":null,"compliance_score":null,"contact_category":{"Perijinan":956,"Umum":492,"Salah Sambung":146,"Empty Call":73,"Operasional":28,"LLAJ":17,"Telepon Iseng":10,"Keselamatan":4}},"Feb":{"whatsapp":2151,"email":632,"inbound":383,"total":3166,"yoy_2025_total":333,"mom":0.11204776958201616,"call_sl":0.982051282051282,"scr":0.982051282051282,"abandon_rate":0.017948717948718,"answer_rate":0.982051282051282,"call_in":390,"accepted":383,"abandon_calls":7,"aht_call_sec":347.0,"ticket_total":1822,"maincat":{"Informasi":1247,"Pengaduan":333,"Lain - Lain":242},"fcr":0.8995609220636663,"nfcr_total":183,"complaint_total":333,"ticket_closed":1720,"ticket_reopen":24,"ticket_open":61,"ticket_on_progress":14,"sentiment":{"positive":778,"neutral":1043,"negative":1},"aht_ticket_sec":574.0,"asa_sec":31.0,"acw_sec":3.0,"category":{"Salah Sambung":195,"Mudik Gratis":167,"Penawaran Barang & Jasa":114,"Progres Tiket":107,"Surat Pemberitahuan":65,"Angkutan Barang Umum":53,"Rencana Pengoperasian Kapal (RPK)":52,"Angkutan Barang Berbahaya":45,"Empty Call":43,"Info Alamat & Nomor Telepon":36},"ticketgroup_channel":{"BADAN KEBIJAKAN TRANSPORTASI|inbound":1,"BADAN KEBIJAKAN TRANSPORTASI|whatsapp":1,"BADAN PENGEMBANGAN SDM PERHUBUNGAN|email":1,"BADAN PENGEMBANGAN SDM PERHUBUNGAN|whatsapp":4,"BIRO KOMUNIKASI & INFORMASI PUBLIK|email":204,"BIRO KOMUNIKASI & INFORMASI PUBLIK|inbound":12,"BIRO KOMUNIKASI & INFORMASI PUBLIK|whatsapp":129,"DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|email":123,"DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|inbound":201,"DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|whatsapp":249,"DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|whatsapp":2,"DIREKTORAT JENDERAL PERHUBUNGAN DARAT|email":53,"DIREKTORAT JENDERAL PERHUBUNGAN DARAT|inbound":97,"DIREKTORAT JENDERAL PERHUBUNGAN DARAT|whatsapp":237,"DIREKTORAT JENDERAL PERHUBUNGAN UDARA|email":124,"DIREKTORAT JENDERAL PERHUBUNGAN UDARA|inbound":11,"DIREKTORAT JENDERAL PERHUBUNGAN UDARA|whatsapp":67,"DIREKTORAT JENDERAL PERKERETAAPIAN|email":25,"DIREKTORAT JENDERAL PERKERETAAPIAN|inbound":10,"DIREKTORAT JENDERAL PERKERETAAPIAN|whatsapp":25,"INSPEKTORAT JENDERAL|email":2,"INSPEKTORAT JENDERAL|whatsapp":2,"SPAM|email":105,"SPAM|inbound":46,"SPAM|whatsapp":91},"escalated":{"not escalated":1639,"escalated":183},"agent":{"YUSRA MULO S":483,"M. NIZHOMUL HAMDI":464,"IIS SOPIATUROHMAH":439,"NURHOLIS":436},"agent_aht":{"IIS SOPIATUROHMAH":617,"M. NIZHOMUL HAMDI":853,"NURHOLIS":670,"YUSRA MULO S":875},"complaint_resolved":277,"complaint_resolution_rate":0.8318318318318318,"has_ticket_detail":true,"qa_score":null,"critical_error_rate":null,"compliance_score":null,"contact_category":{"Perijinan":935,"Umum":610,"Salah Sambung":195,"Empty Call":43,"Operasional":22,"LLAJ":11,"Telepon Iseng":4,"Keselamatan":2}},"Mar":{"whatsapp":3134,"email":801,"inbound":502,"total":4437,"yoy_2025_total":801,"mom":0.401452937460518,"call_sl":0.910909090909091,"scr":0.910909090909091,"abandon_rate":0.0890909090909091,"answer_rate":0.910909090909091,"call_in":550,"accepted":501,"abandon_calls":49,"aht_call_sec":259.18874781879,"ticket_total":2549,"maincat":{"Informasi":1695,"Pengaduan":434,"Lain - Lain":420},"fcr":0.9030992546096508,"nfcr_total":247,"complaint_total":434,"ticket_closed":2390,"ticket_reopen":12,"ticket_open":102,"ticket_on_progress":44,"sentiment":{"positive":1158,"neutral":1390,"negative":1},"aht_ticket_sec":511.0,"asa_sec":71.0,"acw_sec":3.0,"category":{"Mudik Gratis":492,"Salah Sambung":298,"Penawaran Barang & Jasa":132,"Progres Tiket":114,"Empty Call":113,"Surat Pemberitahuan":104,"Keterlambatan Penerbangan":79,"Angkutan Barang Umum":56,"Info Alamat & Nomor Telepon":46,"Pembatasan Operasional Kendaraan Angkutan Barang":43},"ticketgroup_channel":{"-|whatsapp":1,"BADAN KEBIJAKAN TRANSPORTASI|email":1,"BADAN PENGEMBANGAN SDM PERHUBUNGAN|email":1,"BADAN PENGEMBANGAN SDM PERHUBUNGAN|whatsapp":3,"BIRO KOMUNIKASI & INFORMASI PUBLIK|email":238,"BIRO KOMUNIKASI & INFORMASI PUBLIK|inbound":15,"BIRO KOMUNIKASI & INFORMASI PUBLIK|whatsapp":81,"DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|email":122,"DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|inbound":157,"DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|whatsapp":227,"DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|email":1,"DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|inbound":4,"DIREKTORAT JENDERAL PERHUBUNGAN DARAT|email":60,"DIREKTORAT JENDERAL PERHUBUNGAN DARAT|inbound":154,"DIREKTORAT JENDERAL PERHUBUNGAN DARAT|whatsapp":419,"DIREKTORAT JENDERAL PERHUBUNGAN UDARA|email":220,"DIREKTORAT JENDERAL PERHUBUNGAN UDARA|inbound":34,"DIREKTORAT JENDERAL PERHUBUNGAN UDARA|whatsapp":158,"DIREKTORAT JENDERAL PERKERETAAPIAN|email":24,"DIREKTORAT JENDERAL PERKERETAAPIAN|inbound":66,"DIREKTORAT JENDERAL PERKERETAAPIAN|whatsapp":133,"INSPEKTORAT JENDERAL|email":3,"INSPEKTORAT JENDERAL|whatsapp":4,"SPAM|email":136,"SPAM|inbound":67,"SPAM|whatsapp":220},"escalated":{"not escalated":2302,"escalated":247},"agent":{"NURHOLIS":696,"YUSRA MULO S":640,"IIS SOPIATUROHMAH":591,"M. NIZHOMUL HAMDI":513,"IVA AMANDA":105},"agent_aht":{"IIS SOPIATUROHMAH":793,"IVA AMANDA":918,"M. NIZHOMUL HAMDI":804,"NURHOLIS":559,"YUSRA MULO S":770},"complaint_resolved":340,"complaint_resolution_rate":0.783410138248848,"has_ticket_detail":true,"qa_score":null,"critical_error_rate":null,"compliance_score":null,"contact_category":{"Umum":1033,"Perijinan":950,"Salah Sambung":298,"Empty Call":113,"Operasional":87,"LLAJ":58,"Telepon Iseng":9,"Keselamatan":1}},"Apr":{"whatsapp":1712,"email":779,"inbound":379,"total":2870,"yoy_2025_total":2184,"mom":-0.353166553977913,"call_sl":0.959697732997481,"scr":0.959697732997481,"abandon_rate":0.0403022670025189,"answer_rate":0.959697732997481,"call_in":397,"accepted":381,"abandon_calls":16,"aht_call_sec":333.0,"ticket_total":1890,"maincat":{"Informasi":1292,"Pengaduan":354,"Lain - Lain":244},"fcr":0.8904761904761904,"nfcr_total":207,"complaint_total":354,"ticket_closed":null,"ticket_reopen":null,"ticket_open":null,"ticket_on_progress":null,"sentiment":null,"aht_ticket_sec":null,"asa_sec":null,"acw_sec":null,"category":null,"ticketgroup_channel":null,"escalated":null,"agent":null,"agent_aht":null,"complaint_resolved":null,"complaint_resolution_rate":null,"has_ticket_detail":false,"qa_score":null,"critical_error_rate":null,"compliance_score":null},"May":{"whatsapp":1442,"email":547,"inbound":354,"total":2343,"yoy_2025_total":2101,"mom":-0.18362369337979095,"call_sl":0.975274725274725,"scr":0.975274725274725,"abandon_rate":0.0247252747252747,"answer_rate":0.975274725274725,"call_in":364,"accepted":355,"abandon_calls":9,"aht_call_sec":350.678740084009,"ticket_total":1454,"maincat":{"Informasi":1054,"Pengaduan":233,"Lain - Lain":167},"fcr":0.8851444291609354,"nfcr_total":167,"complaint_total":233,"ticket_closed":null,"ticket_reopen":null,"ticket_open":null,"ticket_on_progress":null,"sentiment":null,"aht_ticket_sec":null,"asa_sec":null,"acw_sec":null,"category":null,"ticketgroup_channel":null,"escalated":null,"agent":null,"agent_aht":null,"complaint_resolved":null,"complaint_resolution_rate":null,"has_ticket_detail":false,"qa_score":null,"critical_error_rate":null,"compliance_score":null},"Jun":{"whatsapp":1753,"email":751,"inbound":361,"total":2865,"yoy_2025_total":2547,"mom":0.22279129321382843,"call_sl":0.978260869565217,"scr":0.978260869565217,"abandon_rate":0.0217391304347826,"answer_rate":0.978260869565217,"call_in":368,"accepted":360,"abandon_calls":8,"aht_call_sec":362.802048558327,"ticket_total":1815,"maincat":{"Informasi":1207,"Pengaduan":374,"Lain - Lain":234},"fcr":0.8738292011019284,"nfcr_total":229,"complaint_total":374,"ticket_closed":null,"ticket_reopen":null,"ticket_open":null,"ticket_on_progress":null,"sentiment":null,"aht_ticket_sec":null,"asa_sec":null,"acw_sec":null,"category":null,"ticketgroup_channel":null,"escalated":null,"agent":null,"agent_aht":null,"complaint_resolved":null,"complaint_resolution_rate":null,"has_ticket_detail":false,"qa_score":null,"critical_error_rate":null,"compliance_score":null},"Jul":{"whatsapp":1858,"email":779,"inbound":363,"total":3000,"yoy_2025_total":3621,"mom":0.04712041884816754,"call_sl":0.973190348525469,"scr":0.973190348525469,"abandon_rate":0.0268096514745308,"answer_rate":0.973190348525469,"call_in":373,"accepted":363,"abandon_calls":10,"aht_call_sec":351.910408335312,"ticket_total":1879,"maincat":{"Informasi":1270,"Pengaduan":372,"Lain - Lain":237},"fcr":0.8829164449175093,"nfcr_total":220,"complaint_total":372,"ticket_closed":null,"ticket_reopen":null,"ticket_open":null,"ticket_on_progress":null,"sentiment":null,"aht_ticket_sec":null,"asa_sec":null,"acw_sec":null,"category":null,"ticketgroup_channel":null,"escalated":null,"agent":null,"agent_aht":null,"complaint_resolved":null,"complaint_resolution_rate":null,"has_ticket_detail":false,"qa_score":null,"critical_error_rate":null,"compliance_score":null},"Aug":{"whatsapp":1836,"email":780,"inbound":338,"total":2954,"yoy_2025_total":2991,"mom":-0.015333333333333332,"call_sl":0.971264367816092,"scr":0.971264367816092,"abandon_rate":0.0287356321839081,"answer_rate":0.971264367816092,"call_in":348,"accepted":338,"abandon_calls":10,"aht_call_sec":348.057896170864,"ticket_total":1858,"maincat":{"Informasi":1308,"Pengaduan":345,"Lain - Lain":205},"fcr":0.8869752421959096,"nfcr_total":210,"complaint_total":345,"ticket_closed":1779,"ticket_reopen":28,"ticket_open":28,"ticket_on_progress":23,"sentiment":{"positive":581,"neutral":1277,"negative":0},"aht_ticket_sec":512.0,"asa_sec":26.0,"acw_sec":8.0,"category":{"Salah Sambung":154,"Penawaran Barang & Jasa":126,"Surat Pemberitahuan":96,"SIPENCATAR":92,"Progres Tiket":91,"Angkutan Barang Berbahaya":57,"Pesawat Tanpa Awak":51,"Kartu Pengawasan (KPS)":49,"Undangan Kegiatan":48,"Empty Call":44},"ticketgroup_channel":{"BADAN PENGEMBANGAN SDM PERHUBUNGAN|email":14,"BADAN PENGEMBANGAN SDM PERHUBUNGAN|inbound":4,"BADAN PENGEMBANGAN SDM PERHUBUNGAN|whatsapp":89,"BIRO KOMUNIKASI & INFORMASI PUBLIK|email":250,"BIRO KOMUNIKASI & INFORMASI PUBLIK|inbound":7,"BIRO KOMUNIKASI & INFORMASI PUBLIK|whatsapp":45,"DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|email":123,"DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|inbound":136,"DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|whatsapp":245,"DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|email":1,"DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|whatsapp":3,"DIREKTORAT JENDERAL PERHUBUNGAN DARAT|email":64,"DIREKTORAT JENDERAL PERHUBUNGAN DARAT|inbound":106,"DIREKTORAT JENDERAL PERHUBUNGAN DARAT|whatsapp":165,"DIREKTORAT JENDERAL PERHUBUNGAN UDARA|email":226,"DIREKTORAT JENDERAL PERHUBUNGAN UDARA|inbound":28,"DIREKTORAT JENDERAL PERHUBUNGAN UDARA|whatsapp":108,"DIREKTORAT JENDERAL PERKERETAAPIAN|email":29,"DIREKTORAT JENDERAL PERKERETAAPIAN|inbound":8,"DIREKTORAT JENDERAL PERKERETAAPIAN|whatsapp":2,"SPAM|email":79,"SPAM|inbound":43,"SPAM|whatsapp":83},"escalated":{"not escalated":1648,"escalated":210},"agent":{"NURHOLIS":649,"YUSRA MULO S":629,"M. NIZHOMUL HAMDI":580,"IIS SOPIATUROHMAH":0},"agent_aht":{"M. NIZHOMUL HAMDI":805,"NURHOLIS":672,"YUSRA MULO S":844},"complaint_resolved":322,"complaint_resolution_rate":0.9333333333333333,"has_ticket_detail":true,"qa_score":0.87439815,"qa_score_sosmed":0.90490741,"qa_score_voice":0.8438888900000001,"critical_error_rate":0.05185185185185185,"compliance_score":1.0,"qm_sample_count":54,"critical_error_sample":540,"qa_breakdown":{"customer_affecting":0.9351851851851852,"business_affecting":0.9351851851851852,"compliance_affecting":1.0,"non_critical_error":0.7380952380952381},"contact_category":{"Perijinan":968,"Umum":637,"Salah Sambung":154,"Empty Call":44,"Operasional":27,"LLAJ":17,"Telepon Iseng":7,"Keselamatan":4}}},"overall":{"whatsapp":15725,"email":5643,"inbound":3114,"total":24482,"yoy_2025_total":17181,"ticket_total":14993,"call_in":3234,"accepted":3113,"abandon_calls":121,"call_sl":0.9625850340136054,"scr":0.9625850340136054,"answer_rate":0.9625850340136054,"abandon_rate":0.03741496598639456,"aht_call_sec":322.35578006951135,"fcr":0.8898819449076235,"maincat":{"Informasi":10177,"Pengaduan":2838,"Lain - Lain":1978},"complaint_total":2838,"ticket_closed_detail":7504,"ticket_reopen_detail":83,"ticket_total_detail":7955,"sentiment":{"positive":3222,"neutral":4730,"negative":3},"aht_ticket_sec":530.9787554996857,"asa_sec":41.130483972344436,"acw_sec":4.16781898177247,"category":{"Salah Sambung":793,"Mudik Gratis":659,"Penawaran Barang & Jasa":458,"Progres Tiket":403,"Surat Pemberitahuan":340,"Empty Call":273,"Angkutan Barang Umum":143,"Info Alamat & Nomor Telepon":136,"Angkutan Barang Berbahaya":102,"Rencana Pengoperasian Kapal (RPK)":99},"ticketgroup_channel":{"BADAN PENGEMBANGAN SDM PERHUBUNGAN|inbound":5,"BADAN PENGEMBANGAN SDM PERHUBUNGAN|whatsapp":108,"BIRO KOMUNIKASI & INFORMASI PUBLIK|email":887,"BIRO KOMUNIKASI & INFORMASI PUBLIK|inbound":42,"BIRO KOMUNIKASI & INFORMASI PUBLIK|whatsapp":327,"DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|email":497,"DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|inbound":702,"DIREKTORAT JENDERAL  PERHUBUNGAN LAUT|whatsapp":969,"DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|email":6,"DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|whatsapp":7,"DIREKTORAT JENDERAL PERHUBUNGAN DARAT|email":230,"DIREKTORAT JENDERAL PERHUBUNGAN DARAT|inbound":449,"DIREKTORAT JENDERAL PERHUBUNGAN DARAT|whatsapp":994,"DIREKTORAT JENDERAL PERHUBUNGAN UDARA|email":691,"DIREKTORAT JENDERAL PERHUBUNGAN UDARA|inbound":99,"DIREKTORAT JENDERAL PERHUBUNGAN UDARA|whatsapp":443,"DIREKTORAT JENDERAL PERKERETAAPIAN|email":89,"DIREKTORAT JENDERAL PERKERETAAPIAN|inbound":92,"DIREKTORAT JENDERAL PERKERETAAPIAN|whatsapp":177,"INSPEKTORAT JENDERAL|email":7,"INSPEKTORAT JENDERAL|whatsapp":11,"SPAM|email":383,"SPAM|inbound":243,"SPAM|whatsapp":473,"BADAN KEBIJAKAN TRANSPORTASI|inbound":1,"BADAN KEBIJAKAN TRANSPORTASI|whatsapp":1,"BADAN PENGEMBANGAN SDM PERHUBUNGAN|email":16,"-|whatsapp":1,"BADAN KEBIJAKAN TRANSPORTASI|email":1,"DIREKTORAT JENDERAL INTEGRASI TRANSPORTASI DAN MULTIMODA|inbound":4},"escalated":{"not escalated":7127,"escalated":828},"complaint_resolved_detail":1272,"complaint_total_detail":1505,"complaint_resolution_rate":0.8451827242524917,"hour_dist":{"8":1230,"9":1030,"10":997,"14":867,"11":884,"13":707,"16":565,"15":734,"12":445,"17":106,"23":63,"0":30,"1":17,"22":38,"19":50,"7":34,"18":38,"21":28,"2":9,"20":36,"5":14,"6":17,"4":9,"3":7},"dow_dist":{"Monday":1946,"Thursday":1485,"Wednesday":1524,"Tuesday":1388,"Friday":1341,"Sunday":153,"Saturday":118},"qa_score":0.87439815,"critical_error_rate":0.05185185185185185,"compliance_score":1.0,"qm_sample_count":54,"total_agents":9,"supervisor":"Wowo Sugiarto","active_agents_latest":4,"active_agents_latest_month":"Aug","agent":{"NURHOLIS":649,"YUSRA MULO S":629,"M. NIZHOMUL HAMDI":580,"IIS SOPIATUROHMAH":0},"agent_aht":{"M. NIZHOMUL HAMDI":805,"NURHOLIS":672,"YUSRA MULO S":844},"agent_qa":{"M. NIZHOMUL HAMDI":0.83486111,"NURHOLIS":0.88125,"YUSRA MULO S":0.90708333},"qa_breakdown":{"customer_affecting":0.9351851851851852,"business_affecting":0.9351851851851852,"compliance_affecting":1.0,"non_critical_error":0.7380952380952381},"qa_score_sosmed":0.90490741,"qa_score_voice":0.8438888900000001,"complaint_resolved":1272,"complaint_total_known":1505,"ticket_reopen":83,"ticket_total_known":7955,"agent_ytd":{"YUSRA MULO S":2214,"NURHOLIS":2235,"M. NIZHOMUL HAMDI":1967,"IIS SOPIATUROHMAH":1430,"IVA AMANDA":105},"agent_aht_ytd":{"YUSRA MULO S":821,"NURHOLIS":623,"M. NIZHOMUL HAMDI":829,"IIS SOPIATUROHMAH":710,"IVA AMANDA":918},"nfcr_total":1651,"contact_category":{"Perijinan":3809,"Umum":2772,"Salah Sambung":793,"Empty Call":273,"Operasional":164,"LLAJ":103,"Telepon Iseng":30,"Keselamatan":11},"active_agent_names":["Iis Sopiaturohmah","M. Nizhomul Hamdi","Nurholis","Yusra Mulo Sigeha"]},"daily":{"2026-01-01":{"whatsapp":9,"email":10,"inbound":2,"total":21},"2026-01-02":{"whatsapp":37,"email":12,"inbound":7,"total":56},"2026-01-03":{"whatsapp":5,"email":8,"inbound":6,"total":19},"2026-01-04":{"whatsapp":17,"email":0,"inbound":10,"total":27},"2026-01-05":{"whatsapp":34,"email":31,"inbound":19,"total":84},"2026-01-06":{"whatsapp":31,"email":15,"inbound":24,"total":70},"2026-01-07":{"whatsapp":33,"email":26,"inbound":16,"total":75},"2026-01-08":{"whatsapp":33,"email":31,"inbound":25,"total":89},"2026-01-09":{"whatsapp":22,"email":25,"inbound":23,"total":70},"2026-01-12":{"whatsapp":40,"email":25,"inbound":23,"total":88},"2026-01-13":{"whatsapp":35,"email":18,"inbound":31,"total":84},"2026-01-14":{"whatsapp":32,"email":26,"inbound":18,"total":76},"2026-01-15":{"whatsapp":26,"email":32,"inbound":24,"total":82},"2026-01-19":{"whatsapp":56,"email":47,"inbound":23,"total":126},"2026-01-20":{"whatsapp":25,"email":25,"inbound":18,"total":68},"2026-01-21":{"whatsapp":32,"email":23,"inbound":26,"total":81},"2026-01-22":{"whatsapp":32,"email":45,"inbound":22,"total":99},"2026-01-23":{"whatsapp":37,"email":40,"inbound":22,"total":99},"2026-01-26":{"whatsapp":50,"email":40,"inbound":18,"total":108},"2026-01-27":{"whatsapp":29,"email":32,"inbound":21,"total":82},"2026-01-28":{"whatsapp":42,"email":18,"inbound":13,"total":73},"2026-01-29":{"whatsapp":32,"email":22,"inbound":20,"total":74},"2026-01-30":{"whatsapp":28,"email":27,"inbound":19,"total":74},"2026-02-02":{"whatsapp":47,"email":51,"inbound":18,"total":116},"2026-02-03":{"whatsapp":38,"email":29,"inbound":24,"total":91},"2026-02-04":{"whatsapp":43,"email":27,"inbound":38,"total":108},"2026-02-05":{"whatsapp":30,"email":38,"inbound":37,"total":105},"2026-02-06":{"whatsapp":33,"email":28,"inbound":17,"total":78},"2026-02-09":{"whatsapp":37,"email":52,"inbound":17,"total":106},"2026-02-10":{"whatsapp":43,"email":33,"inbound":24,"total":100},"2026-02-11":{"whatsapp":33,"email":27,"inbound":11,"total":71},"2026-02-12":{"whatsapp":57,"email":16,"inbound":20,"total":93},"2026-02-13":{"whatsapp":43,"email":24,"inbound":21,"total":88},"2026-02-18":{"whatsapp":47,"email":74,"inbound":16,"total":137},"2026-02-19":{"whatsapp":49,"email":35,"inbound":21,"total":105},"2026-02-20":{"whatsapp":36,"email":24,"inbound":25,"total":85},"2026-02-23":{"whatsapp":53,"email":40,"inbound":13,"total":106},"2026-02-24":{"whatsapp":44,"email":28,"inbound":15,"total":87},"2026-02-25":{"whatsapp":34,"email":35,"inbound":28,"total":97},"2026-02-26":{"whatsapp":55,"email":35,"inbound":16,"total":106},"2026-02-27":{"whatsapp":60,"email":41,"inbound":17,"total":118},"2026-03-02":{"whatsapp":184,"email":93,"inbound":43,"total":320},"2026-03-03":{"whatsapp":60,"email":19,"inbound":31,"total":110},"2026-03-04":{"whatsapp":68,"email":32,"inbound":30,"total":130},"2026-03-05":{"whatsapp":59,"email":48,"inbound":36,"total":143},"2026-03-06":{"whatsapp":59,"email":33,"inbound":22,"total":114},"2026-03-09":{"whatsapp":93,"email":78,"inbound":26,"total":197},"2026-03-10":{"whatsapp":53,"email":40,"inbound":26,"total":119},"2026-03-11":{"whatsapp":48,"email":25,"inbound":25,"total":98},"2026-03-12":{"whatsapp":39,"email":28,"inbound":20,"total":87},"2026-03-13":{"whatsapp":49,"email":40,"inbound":15,"total":104},"2026-03-14":{"whatsapp":22,"email":15,"inbound":6,"total":43},"2026-03-15":{"whatsapp":24,"email":11,"inbound":14,"total":49},"2026-03-16":{"whatsapp":40,"email":46,"inbound":19,"total":105},"2026-03-17":{"whatsapp":35,"email":45,"inbound":17,"total":97},"2026-03-18":{"whatsapp":30,"email":15,"inbound":8,"total":53},"2026-03-19":{"whatsapp":31,"email":18,"inbound":7,"total":56},"2026-03-20":{"whatsapp":8,"email":9,"inbound":4,"total":21},"2026-03-21":{"whatsapp":9,"email":9,"inbound":3,"total":21},"2026-03-22":{"whatsapp":24,"email":7,"inbound":13,"total":44},"2026-03-23":{"whatsapp":20,"email":19,"inbound":15,"total":54},"2026-03-24":{"whatsapp":30,"email":17,"inbound":9,"total":56},"2026-03-25":{"whatsapp":50,"email":24,"inbound":27,"total":101},"2026-03-26":{"whatsapp":36,"email":17,"inbound":15,"total":68},"2026-03-27":{"whatsapp":48,"email":32,"inbound":24,"total":104},"2026-03-28":{"whatsapp":21,"email":3,"inbound":11,"total":35},"2026-03-29":{"whatsapp":21,"email":7,"inbound":5,"total":33},"2026-03-30":{"whatsapp":42,"email":25,"inbound":16,"total":83},"2026-03-31":{"whatsapp":43,"email":51,"inbound":10,"total":104},"2026-08-03":{"whatsapp":29,"email":43,"inbound":16,"total":88},"2026-08-04":{"whatsapp":22,"email":24,"inbound":12,"total":58},"2026-08-05":{"whatsapp":43,"email":38,"inbound":16,"total":97},"2026-08-06":{"whatsapp":39,"email":26,"inbound":25,"total":90},"2026-08-07":{"whatsapp":23,"email":38,"inbound":15,"total":76},"2026-08-10":{"whatsapp":36,"email":46,"inbound":22,"total":104},"2026-08-11":{"whatsapp":36,"email":40,"inbound":20,"total":96},"2026-08-12":{"whatsapp":33,"email":34,"inbound":18,"total":85},"2026-08-13":{"whatsapp":35,"email":34,"inbound":15,"total":84},"2026-08-14":{"whatsapp":36,"email":26,"inbound":12,"total":74},"2026-08-18":{"whatsapp":55,"email":85,"inbound":26,"total":166},"2026-08-19":{"whatsapp":37,"email":51,"inbound":19,"total":107},"2026-08-20":{"whatsapp":38,"email":26,"inbound":14,"total":78},"2026-08-21":{"whatsapp":46,"email":37,"inbound":18,"total":101},"2026-08-24":{"whatsapp":57,"email":54,"inbound":14,"total":125},"2026-08-26":{"whatsapp":69,"email":51,"inbound":15,"total":135},"2026-08-27":{"whatsapp":36,"email":56,"inbound":13,"total":105},"2026-08-28":{"whatsapp":32,"email":27,"inbound":20,"total":79},"2026-08-31":{"whatsapp":38,"email":50,"inbound":22,"total":110}},"targets":{"sl":0.85,"scr":0.9,"answer_rate":0.95,"abandon_rate":0.1,"aht_sec":330,"fcr":0.85,"complaint_resolution":0.9,"asa_sec":20,"acw_sec":45,"qa_score":0.9,"critical_error_rate":0.02,"compliance_score":0.92},"meta":{"source_traffic":"SUMMARY FOR EVALUATION 2026 KEMENHUB.xlsx (Traffic Call, All Channel, Summary Whatsapp/Email/Inbound 2026, Tiket)","source_ticket_aug":"Tiket CRM Agustus 2026.xlsx (sheet: master)","source_qm_aug":"PENILAIAN QM SCORE KEMENHUB AGUSTUS 2026.xlsx (Summary Voice, Summary Sosmed, QM Score All Channel)","generated":"2026-09-08"}};
 (function(){
 "use strict";
 
@@ -625,10 +629,21 @@ function cv(name){
 /* ============================================================
    DATA / FORMAT HELPERS
    ============================================================ */
-var MONTHS = DATA.months; // ["Jan",...,"Jul"]
-var MONTH_FULL = {Jan:"January",Feb:"February",Mar:"March",Apr:"April",May:"May",Jun:"June",Jul:"July"};
+var MONTHS = DATA.months; // ["Jan",...,"Aug"]
+var DETAIL_MONTHS = DATA.detail_months; // months with real ticket-level detail (sentiment, category, ticket status, AHT-ticket, ASA, ACW, agent ranking)
+var MONTH_FULL = {Jan:"January",Feb:"February",Mar:"March",Apr:"April",May:"May",Jun:"June",Jul:"July",Aug:"August"};
 var CH_LABEL = {whatsapp:"WhatsApp", email:"Email", inbound:"Inbound Call"};
 var CH_KEYS = ["whatsapp","email","inbound"];
+function hasDetail(period){ return period==='ALL' || DETAIL_MONTHS.indexOf(period)>-1; }
+function na(v){ return v==null || (typeof v==='number' && isNaN(v)); }
+var AGENT_NAME_MAP = {
+  'IIS SOPIATUROHMAH': 'Iis Sopiaturohmah',
+  'NURHOLIS': 'Nurholis',
+  'M. NIZHOMUL HAMDI': 'M. Nizhomul Hamdi',
+  'YUSRA MULO S': 'Yusra Mulo Sigeha',
+  'IVA AMANDA': 'Iva Amanda'
+};
+function agentDisplayName(key){ return AGENT_NAME_MAP[key] || titleCase(key); }
 
 function fmtInt(n){ if(n==null||isNaN(n)) return "—"; return Math.round(n).toLocaleString('en-US'); }
 function fmtPct(n,d){ if(n==null||isNaN(n)) return "—"; return (n*100).toFixed(d==null?1:d)+"%"; }
@@ -649,7 +664,7 @@ function getPrev(period){
   return {obj: DATA.monthly[MONTHS[idx-1]], label:'vs '+MONTHS[idx-1]};
 }
 function periodLabel(period){
-  return period==='ALL' ? 'Jan–Jul 2026 (Full Period)' : MONTH_FULL[period]+' 2026';
+  return period==='ALL' ? (MONTH_FULL[MONTHS[0]]+'–'+MONTH_FULL[MONTHS[MONTHS.length-1]]+' 2026 (Full Period)') : MONTH_FULL[period]+' 2026';
 }
 
 /* normalize ticketgroup_channel shape between monthly (flat "group|ch") and overall (nested) */
@@ -687,19 +702,15 @@ var KPI_DEFS = [
     val:function(d){return d.answer_rate;}, target:TARGETS.answer_rate, fmt:function(v){return fmtPct(v,1);} },
   { id:'abandon', label:'Abandonment Rate', unit:'%', polarity:'lower', isRate:true,
     val:function(d){return d.abandon_rate;}, target:TARGETS.abandon_rate, fmt:function(v){return fmtPct(v,1);} },
-  { id:'aht', label:'Average Handling Time (AHT)', unit:'', polarity:'lower',
+  { id:'aht', label:'AHT, Ticket (median, '+DETAIL_MONTHS.join('/')+')', unit:'', polarity:'lower',
     val:function(d){return d.aht_ticket_sec;}, target:TARGETS.aht_sec, fmt:fmtSec },
   { id:'fcr', label:'First Contact Resolution (FCR)', unit:'%', polarity:'higher', isRate:true,
     val:function(d){return d.fcr;}, target:TARGETS.fcr, fmt:function(v){return fmtPct(v,1);} },
-  { id:'csat', label:'Customer Satisfaction (CSAT)', unit:'%', polarity:'higher', isRate:true,
-    val:function(d){return d.csat;}, target:TARGETS.csat, fmt:function(v){return fmtPct(v,1);} },
-  { id:'qa', label:'Quality Assurance Score', unit:'%', polarity:'higher', isRate:true,
+  { id:'qa', label:'Quality Assurance Score (Agustus 2026 snapshot)', unit:'%', polarity:'higher', isRate:true,
     val:function(d){return d.qa_score;}, target:TARGETS.qa_score, fmt:function(v){return fmtPct(v,1);} },
-  { id:'occupancy', label:'Occupancy', unit:'%', polarity:'higher', isRate:true,
-    val:function(d){return d.occupancy;}, target:TARGETS.occupancy, fmt:function(v){return fmtPct(v,1);} },
-  { id:'asa', label:'Average Speed of Answer (ASA)', unit:'', polarity:'lower',
+  { id:'asa', label:'ASA ('+DETAIL_MONTHS.join('/')+' only)', unit:'', polarity:'lower',
     val:function(d){return d.asa_sec;}, target:TARGETS.asa_sec, fmt:fmtSec },
-  { id:'complaint', label:'Complaint Resolution Rate', unit:'%', polarity:'higher', isRate:true,
+  { id:'complaint', label:'Complaint Resolution Rate ('+DETAIL_MONTHS.join('/')+' only)', unit:'%', polarity:'higher', isRate:true,
     val:function(d){return d.complaint_resolution_rate;}, target:TARGETS.complaint_resolution, fmt:function(v){return fmtPct(v,1);} },
 ];
 
@@ -742,7 +753,7 @@ function statusColorVar(s){
 /* ============================================================
    STATE
    ============================================================ */
-var state = { period:'ALL', gran:'weekly' };
+var state = { period:'ALL', gran:'monthly' };
 var charts = {};
 
 function destroyChart(key){ if(charts[key]){ charts[key].destroy(); delete charts[key]; } }
@@ -773,7 +784,7 @@ function renderGranSeg(){
 
 function renderMeta(){
   document.getElementById('metaPeriod').textContent = periodLabel(state.period);
-  document.getElementById('metaUpdated').textContent = 'Jul 2026 • 21 Aug 2026';
+  document.getElementById('metaUpdated').textContent = 'Aug 2026 • 08 Sep 2026';
   document.getElementById('footStamp').textContent = 'Generated ' + new Date().toISOString().slice(0,10);
 }
 
@@ -792,9 +803,9 @@ function renderKpiCards(){
 
   KPI_DEFS.forEach(function(def){
     var value = def.val(cur);
-    var ach = achievement(def, value);
-    var st = def.target==null ? 'info' : status(def, ach);
-    if(def.target!=null){ if(ach>=1) aboveCount++; else belowCount++; }
+    var ach = na(value) ? null : achievement(def, value);
+    var st = (def.target==null || ach==null) ? 'info' : status(def, ach);
+    if(def.target!=null && ach!=null){ if(ach>=1) aboveCount++; else belowCount++; }
     var colors = statusColorVar(st);
 
     var prevValue = prev ? def.val(prev) : null;
@@ -804,8 +815,8 @@ function renderKpiCards(){
     card.className = 'kpi-card';
     card.style.setProperty('--accent', 'var('+colors[0]+')');
 
-    var pillText = def.target==null ? 'INFO' : (st==='good'?'ACHIEVED':(st==='warning'?'ATTENTION':'BELOW TARGET'));
-    var barPct = ach==null ? 100 : Math.max(4, Math.min(100, ach*100));
+    var pillText = na(value) ? 'NO DATA' : (def.target==null ? 'INFO' : (st==='good'?'ACHIEVED':(st==='warning'?'ATTENTION':'BELOW TARGET')));
+    var barPct = (ach==null) ? (na(value)?0:100) : Math.max(4, Math.min(100, ach*100));
 
     var trendArrow = trend.arrow==='up' ? '↑' : trend.arrow==='down' ? '↓' : '→';
     var trendClass = trend.dir==='up' ? 'trend-up' : trend.dir==='down' ? 'trend-down' : 'trend-flat';
@@ -911,18 +922,19 @@ function renderDoughnut(){
    RENDER: PACE STATS (MTD/YTD/etc)
    ============================================================ */
 function renderPaceStats(){
-  var latestMonth = state.period==='ALL' ? 'Jul' : state.period;
+  var latestMonth = state.period==='ALL' ? MONTHS[MONTHS.length-1] : state.period;
   var mtd = DATA.monthly[latestMonth];
   var ytd = DATA.overall;
   var prevIdx = MONTHS.indexOf(latestMonth) - 1;
   var vsPrevMonth = prevIdx>=0 ? (mtd.total - DATA.monthly[MONTHS[prevIdx]].total)/DATA.monthly[MONTHS[prevIdx]].total : null;
   var vsPrevYear = (ytd.total - ytd.yoy_2025_total)/ytd.yoy_2025_total;
+  var fullRange = MONTH_FULL[MONTHS[0]].slice(0,3)+'–'+MONTH_FULL[MONTHS[MONTHS.length-1]].slice(0,3);
 
   var tiles = [
     {k:'Month-to-Date ('+latestMonth+' 2026)', v: fmtInt(mtd.total)+' contacts', d:'SL '+fmtPct(mtd.call_sl,1)},
-    {k:'Year-to-Date (Jan–Jul 2026)', v: fmtInt(ytd.total)+' contacts', d:'SL '+fmtPct(ytd.call_sl,1)+' avg'},
+    {k:'Year-to-Date ('+fullRange+' 2026)', v: fmtInt(ytd.total)+' contacts', d:'SL '+fmtPct(ytd.call_sl,1)+' avg'},
     {k:'vs Previous Month', v:(vsPrevMonth==null?'—':(vsPrevMonth>=0?'+':'')+(vsPrevMonth*100).toFixed(1)+'%'), d: vsPrevMonth==null?'no prior month':(vsPrevMonth>=0?'Growth':'Decline')},
-    {k:'vs Previous Year', v:(vsPrevYear>=0?'+':'')+(vsPrevYear*100).toFixed(1)+'%', d:'Jan–Jul 2025: '+fmtInt(ytd.yoy_2025_total)},
+    {k:'vs Previous Year', v:(vsPrevYear>=0?'+':'')+(vsPrevYear*100).toFixed(1)+'%', d:fullRange+' 2025: '+fmtInt(ytd.yoy_2025_total)},
   ];
   var wrap = document.getElementById('paceStats');
   wrap.innerHTML = '';
@@ -938,6 +950,16 @@ function renderPaceStats(){
    RENDER: TICKET GROUP x CHANNEL
    ============================================================ */
 function renderTicketGroup(){
+  var ctxEl = document.getElementById('ticketGroupChart');
+  var noteEl = document.getElementById('ticketGroupNote');
+  if(!hasDetail(state.period)){
+    destroyChart('ticketGroup');
+    ctxEl.style.display='none';
+    if(noteEl){ noteEl.style.display='block'; var mel=document.getElementById('ticketGroupNoteMonths'); if(mel) mel.textContent=DETAIL_MONTHS.join(', '); }
+    return;
+  }
+  ctxEl.style.display='block';
+  if(noteEl) noteEl.style.display='none';
   var cur = getCurrent(state.period);
   var map = groupChannelMap(cur);
   var groups = Object.keys(map).map(function(g){
@@ -974,9 +996,14 @@ function renderTicketGroup(){
    RENDER: TOP 5 CATEGORIES (all channel)
    ============================================================ */
 function renderTop5(){
+  var wrap0 = document.getElementById('top5List');
+  if(!hasDetail(state.period)){
+    wrap0.innerHTML = '<p style="font-size:12px;color:var(--ink-3);margin:0;">Contact category data is only available for months with raw ticket-level source data ('+DETAIL_MONTHS.join(', ')+'). Select one of those months, or "All Period", to see this breakdown.</p>';
+    return;
+  }
   var cur = getCurrent(state.period);
-  var cats = Object.entries(cur.category||{}).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
-  var total = Object.values(cur.category||{}).reduce(function(a,b){return a+b;},0) || 1;
+  var cats = Object.entries(cur.contact_category||{}).sort(function(a,b){return b[1]-a[1];}).slice(0,5);
+  var total = Object.values(cur.contact_category||{}).reduce(function(a,b){return a+b;},0) || 1;
   var wrap = document.getElementById('top5List');
   wrap.innerHTML='';
   var max = cats.length ? cats[0][1] : 1;
@@ -985,7 +1012,7 @@ function renderTop5(){
     var row = document.createElement('div');
     row.className = 'agent-row';
     row.innerHTML = '<div class="agent-rank">'+(i+1)+'</div>'+
-      '<div class="agent-name" title="'+c[0]+'">'+titleCase(c[0])+'</div>'+
+      '<div class="agent-name" title="'+c[0]+'">'+c[0]+'</div>'+
       '<div class="agent-bar-wrap"><div class="agent-bar" style="width:'+(c[1]/max*100)+'%;background:'+cv('--brand')+'"></div></div>'+
       '<div class="agent-val">'+pct+'%</div>';
     wrap.appendChild(row);
@@ -1011,6 +1038,12 @@ function abandonRateFor(dateStr){
 function renderVolumeTrend(){
   destroyChart('volume');
   var labels=[], incoming=[], answered=[], abandoned=[];
+  var noteEl = document.getElementById('volumeGranNote');
+  if(noteEl){
+    noteEl.style.display = state.gran==='monthly' ? 'none' : 'block';
+    var mel = document.getElementById('volumeGranNoteMonths');
+    if(mel) mel.textContent = DETAIL_MONTHS.join(', ');
+  }
 
   if(state.gran==='monthly'){
     labels = MONTHS.slice();
@@ -1071,15 +1104,16 @@ function renderVolumeTrend(){
 }
 
 function renderPeakAndSpike(){
+  var scopeTxt = DETAIL_MONTHS.join('/')+' 2026 (months with ticket-level timestamps)';
   var hd = DATA.overall.hour_dist;
   var peakHour = Object.entries(hd).sort(function(a,b){return b[1]-a[1];})[0];
   document.getElementById('peakHour').textContent = peakHour[0]+':00–'+(parseInt(peakHour[0])+1)+':00';
-  document.getElementById('peakHourSub').textContent = fmtInt(peakHour[1])+' tickets logged in this hour band (Jan–Jul)';
+  document.getElementById('peakHourSub').textContent = fmtInt(peakHour[1])+' tickets logged in this hour band ('+scopeTxt+')';
 
   var dow = DATA.overall.dow_dist;
   var peakDay = Object.entries(dow).sort(function(a,b){return b[1]-a[1];})[0];
   document.getElementById('peakDay').textContent = peakDay[0];
-  document.getElementById('peakDaySub').textContent = fmtInt(peakDay[1])+' tickets on '+peakDay[0]+'s (Jan–Jul)';
+  document.getElementById('peakDaySub').textContent = fmtInt(peakDay[1])+' tickets on '+peakDay[0]+'s ('+scopeTxt+')';
 
   var cur = getCurrent(state.period);
   var months = MONTHS.map(function(m){return DATA.monthly[m];});
@@ -1112,6 +1146,15 @@ function renderBullets(){
   var wrap = document.getElementById('bulletList');
   wrap.innerHTML='';
   rows.forEach(function(r){
+    if(na(r.val)){
+      var row0 = document.createElement('div');
+      row0.className='bullet-row';
+      row0.innerHTML = '<div class="bullet-head"><span class="name">'+r.label+'</span><span class="figs">No source data for '+state.period+'</span></div>'+
+        '<div class="bullet-track"><div class="bullet-fill" style="width:0%;"></div></div>'+
+        '<div class="bullet-gap" style="color:var(--ink-3);">Available for '+DETAIL_MONTHS.join(', ')+' and All Period</div>';
+      wrap.appendChild(row0);
+      return;
+    }
     var scaleMax = r.maxScale || (r.isRatio ? 1.3 : Math.max(r.val, r.target)*1.25);
     var pct = Math.max(2, Math.min(100, r.val/scaleMax*100));
     var tpct = Math.max(0, Math.min(100, r.target/scaleMax*100));
@@ -1149,15 +1192,19 @@ function renderCX(){
   var cur = getCurrent(state.period);
   var wrap = document.getElementById('cxStats');
   wrap.innerHTML='';
-  wrap.appendChild(statTile('CSAT', fmtPct(cur.csat,1), 'Target '+fmtPct(TARGETS.csat,0)));
-  wrap.appendChild(statTile('NPS', cur.nps, 'Target ≥ '+TARGETS.nps));
-  wrap.appendChild(statTile('FCR', fmtPct(cur.fcr,1), 'Target '+fmtPct(TARGETS.fcr,0)));
-  wrap.appendChild(statTile('Complaint Resolution', fmtPct(cur.complaint_resolution_rate,1), fmtInt(cur.complaint_resolved)+' / '+fmtInt(cur.complaint_total)+' resolved'));
-  wrap.appendChild(statTile('Customer Effort Score', fmtNum(cur.ces,2)+' / 5', 'Lower is better · target ≤ '+TARGETS.ces));
-  wrap.appendChild(statTile('Positive Sentiment', fmtPct(cur.sentiment.positive/(cur.sentiment.positive+cur.sentiment.neutral+cur.sentiment.negative),0), fmtInt(cur.sentiment.positive)+' interactions'));
+  wrap.appendChild(statTile('FCR (N-FCR based)', fmtPct(cur.fcr,1), 'Target '+fmtPct(TARGETS.fcr,0)+' · from Unit N-FCR registers'));
+  var hasComplaint = !na(cur.complaint_resolution_rate);
+  var complaintOf = cur.complaint_total_known!=null ? cur.complaint_total_known : cur.complaint_total;
+  wrap.appendChild(statTile('Complaint Resolution', hasComplaint?fmtPct(cur.complaint_resolution_rate,1):'—', hasComplaint ? (fmtInt(cur.complaint_resolved)+' / '+fmtInt(complaintOf)+' resolved') : ('Ticket-status detail available for '+DETAIL_MONTHS.join(', '))));
+  wrap.appendChild(statTile('Total Complaints (Pengaduan)', fmtInt(cur.complaint_total), 'all channels, this period'));
+  var hasSent = cur.sentiment && !na(cur.sentiment.positive);
+  wrap.appendChild(statTile('Positive Sentiment', hasSent ? fmtPct(cur.sentiment.positive/(cur.sentiment.positive+cur.sentiment.neutral+cur.sentiment.negative),0) : '—', hasSent ? (fmtInt(cur.sentiment.positive)+' interactions') : ('Available for '+DETAIL_MONTHS.join(', '))));
+  wrap.appendChild(statTile('Escalation Rate', (cur.escalated && !na(cur.escalated.escalated)) ? fmtPct(cur.escalated.escalated/(cur.escalated.escalated+cur.escalated['not escalated']),1) : '—', (cur.escalated && !na(cur.escalated.escalated)) ? (fmtInt(cur.escalated.escalated)+' escalated tickets') : ('Available for '+DETAIL_MONTHS.join(', '))));
+  var reopenOf = cur.ticket_total_known!=null ? cur.ticket_total_known : cur.ticket_total;
+  wrap.appendChild(statTile('Ticket Reopen Rate', (cur.ticket_reopen!=null && reopenOf) ? fmtPct(cur.ticket_reopen/reopenOf,1) : '—', (cur.ticket_reopen!=null) ? (fmtInt(cur.ticket_reopen)+' reopened tickets') : ('Available for '+DETAIL_MONTHS.join(', '))));
 
-  var s = cur.sentiment;
-  var tot = s.positive+s.neutral+s.negative;
+  var s = cur.sentiment && hasSent ? cur.sentiment : {positive:0,neutral:0,negative:0};
+  var tot = s.positive+s.neutral+s.negative || 1;
   destroyChart('sentiment');
   var ctx = document.getElementById('sentimentBar').getContext('2d');
   charts.sentiment = new Chart(ctx, {
@@ -1181,12 +1228,12 @@ function renderCX(){
 
   destroyChart('csatTrend');
   var ctx2 = document.getElementById('csatTrend').getContext('2d');
-  var csatData = MONTHS.map(function(m){return DATA.monthly[m].csat*100;});
+  var fcrData = MONTHS.map(function(m){return DATA.monthly[m].fcr*100;});
   charts.csatTrend = new Chart(ctx2, {
     type:'line',
-    data:{ labels:MONTHS, datasets:[{ data:csatData, borderColor:cv('--brand'), backgroundColor:cv('--brand')+'22', fill:true, tension:.35, pointRadius:3, pointBackgroundColor:cv('--brand') }] },
-    options:{ responsive:true, maintainAspectRatio:true, plugins:{legend:{display:false}, tooltip:{callbacks:{label:function(c){return 'CSAT '+c.parsed.y.toFixed(1)+'%';}}}},
-      scales:{ x:{grid:{display:false}, ticks:{color:cv('--ink-3'), font:{size:10}}}, y:{display:false, suggestedMin:80, suggestedMax:100} } }
+    data:{ labels:MONTHS, datasets:[{ data:fcrData, borderColor:cv('--brand'), backgroundColor:cv('--brand')+'22', fill:true, tension:.35, pointRadius:3, pointBackgroundColor:cv('--brand') }] },
+    options:{ responsive:true, maintainAspectRatio:true, plugins:{legend:{display:false}, tooltip:{callbacks:{label:function(c){return 'FCR '+c.parsed.y.toFixed(1)+'%';}}}},
+      scales:{ x:{grid:{display:false}, ticks:{color:cv('--ink-3'), font:{size:10}}}, y:{display:false, suggestedMin:75, suggestedMax:100} } }
   });
 }
 
@@ -1195,24 +1242,27 @@ function renderCX(){
    ============================================================ */
 function renderOps(){
   var cur = getCurrent(state.period);
-  var activeAgents = DATA.overall.active_agents;
-  var contactsPerAgent = cur.total / activeAgents;
+  var agentCount = state.period==='ALL' ? Object.keys(DATA.overall.agent_ytd).length
+    : (cur.agent && Object.keys(cur.agent).length) ? Object.keys(cur.agent).length : 0;
+  var hasAgentCount = agentCount>0;
+  var ticketsPerAgent = hasAgentCount ? cur.ticket_total / agentCount : null;
+  var workDays = state.period==='ALL' ? MONTHS.length*21.6 : 22;
   var wrap = document.getElementById('opsStats');
   wrap.innerHTML='';
-  wrap.appendChild(statTile('AHT', fmtSec(cur.aht_ticket_sec), 'Target ≤ '+fmtSec(TARGETS.aht_sec)));
-  wrap.appendChild(statTile('Occupancy', fmtPct(cur.occupancy,1), 'Target '+fmtPct(TARGETS.occupancy,0)));
-  wrap.appendChild(statTile('Agent Productivity', fmtInt(contactsPerAgent)+' /agent', 'per period, '+activeAgents+' active agents'));
-  wrap.appendChild(statTile('Contact per Agent / Day', fmtNum(contactsPerAgent/ (state.period==='ALL'?152:30),1), 'approx. working-day pace'));
-  wrap.appendChild(statTile('ACW (After-Call Work)', fmtSec(cur.acw_sec), 'wrap-up time, avg'));
-  wrap.appendChild(statTile('Hold Time (est.)', fmtSec(Math.round(cur.aht_ticket_sec*0.08)), 'modeled · ~8% of AHT'));
-  wrap.appendChild(statTile('Idle Time (est.)', fmtPct(1-cur.occupancy,1), 'complement of occupancy'));
-  wrap.appendChild(statTile('Schedule Adherence', fmtPct(cur.schedule_adherence,1), 'Target '+fmtPct(TARGETS.schedule_adherence,0)));
+  wrap.appendChild(statTile('AHT (Ticket, median)', na(cur.aht_ticket_sec)?'—':fmtSec(cur.aht_ticket_sec), na(cur.aht_ticket_sec) ? ('Available for '+DETAIL_MONTHS.join(', ')) : ('Target ≤ '+fmtSec(TARGETS.aht_sec))));
+  wrap.appendChild(statTile('AHT (Call, avg)', fmtSec(cur.aht_call_sec), 'from Traffic Call register'));
+  wrap.appendChild(statTile('Agent Productivity', hasAgentCount ? fmtInt(ticketsPerAgent)+' tkt/agent' : '—', hasAgentCount ? ('human-handled tickets vs '+agentCount+' agent(s) active that period') : ('Agent-level data available for '+DETAIL_MONTHS.join(', '))));
+  wrap.appendChild(statTile('Tickets per Agent / Day', hasAgentCount ? fmtNum(ticketsPerAgent/workDays,1) : '—', 'approx. working-day pace'));
+  wrap.appendChild(statTile('ACW (After-Call Work, median)', na(cur.acw_sec)?'—':fmtSec(cur.acw_sec), na(cur.acw_sec) ? ('Available for '+DETAIL_MONTHS.join(', ')) : 'wrap-up time'));
+  wrap.appendChild(statTile('Abandon Rate', fmtPct(cur.abandon_rate,1), 'Target ≤ '+fmtPct(TARGETS.abandon_rate,0)));
+  wrap.appendChild(statTile('N-FCR Volume', fmtInt(cur.nfcr_total), 'escalated / non-first-contact-resolved cases'));
+  wrap.appendChild(statTile('Ticket Volume', fmtInt(cur.ticket_total), 'human-handled tickets, this period'));
 
   var idx = MONTHS.map(function(m){return DATA.monthly[m];});
   var base = idx[0];
   var volIdx = idx.map(function(d){return d.total/base.total*100;});
-  var occIdx = idx.map(function(d){return d.occupancy/base.occupancy*100;});
-  var qaIdxArr = idx.map(function(d){return d.qa_score/base.qa_score*100;});
+  var fcrIdx = idx.map(function(d){return d.fcr/base.fcr*100;});
+  var slIdx = idx.map(function(d){return d.call_sl/base.call_sl*100;});
 
   destroyChart('capacity');
   var ctx = document.getElementById('capacityChart').getContext('2d');
@@ -1220,11 +1270,11 @@ function renderOps(){
     type:'line',
     data:{ labels:MONTHS, datasets:[
       {label:'Volume Index', data:volIdx, borderColor:cv('--brand'), backgroundColor:cv('--brand'), tension:.3, pointRadius:2.5, borderWidth:2.5},
-      {label:'Occupancy Index', data:occIdx, borderColor:cv('--c-inbound'), backgroundColor:cv('--c-inbound'), tension:.3, pointRadius:2.5, borderWidth:2},
-      {label:'QA Index', data:qaIdxArr, borderColor:cv('--c-email'), backgroundColor:cv('--c-email'), tension:.3, pointRadius:2.5, borderWidth:2, borderDash:[4,3]},
+      {label:'Service Level Index', data:slIdx, borderColor:cv('--c-inbound'), backgroundColor:cv('--c-inbound'), tension:.3, pointRadius:2.5, borderWidth:2},
+      {label:'FCR Index', data:fcrIdx, borderColor:cv('--c-email'), backgroundColor:cv('--c-email'), tension:.3, pointRadius:2.5, borderWidth:2, borderDash:[4,3]},
     ]},
     options:{ responsive:true, maintainAspectRatio:true, interaction:{mode:'index',intersect:false},
-      scales:{ x:{grid:{display:false}, ticks:{color:cv('--ink-3'), font:{size:10}}}, y:{grid:{color:cv('--border')}, ticks:{color:cv('--ink-3'), callback:function(v){return v+'';}}, title:{display:true,text:'Index (Jan = 100)',color:cv('--ink-3'), font:{size:10}}} },
+      scales:{ x:{grid:{display:false}, ticks:{color:cv('--ink-3'), font:{size:10}}}, y:{grid:{color:cv('--border')}, ticks:{color:cv('--ink-3'), callback:function(v){return v+'';}}, title:{display:true,text:'Index ('+MONTHS[0]+' = 100)',color:cv('--ink-3'), font:{size:10}}} },
       plugins:{ legend:{position:'bottom', labels:{color:cv('--ink-2'), boxWidth:10, boxHeight:10, font:{size:11}}} } }
   });
 }
@@ -1236,47 +1286,69 @@ function renderWorkforce(){
   var cur = getCurrent(state.period);
   var wrap = document.getElementById('workforceStats');
   wrap.innerHTML='';
-  var totalAgents = DATA.overall.total_agents, active = DATA.overall.active_agents;
-  var available = Math.max(1, Math.round(active * cur.schedule_adherence));
-  wrap.appendChild(statTile('Total Agents', totalAgents, 'full Personil roster, incl. supervisor'));
-  wrap.appendChild(statTile('Active Agents', active, 'with recorded ticket activity'));
-  wrap.appendChild(statTile('Available Agents', available, 'avg. staffed per shift'));
-  wrap.appendChild(statTile('Occupancy', fmtPct(cur.occupancy,1), 'Target '+fmtPct(TARGETS.occupancy,0)));
-  wrap.appendChild(statTile('Utilization', fmtPct(Math.min(1,cur.occupancy*1.05),1), 'time on productive work'));
-  wrap.appendChild(statTile('Attendance', fmtPct(cur.attendance,1), 'Target '+fmtPct(TARGETS.attendance,0)));
-  wrap.appendChild(statTile('Schedule Adherence', fmtPct(cur.schedule_adherence,1), 'Target '+fmtPct(TARGETS.schedule_adherence,0)));
-  wrap.appendChild(statTile('Agent Productivity', fmtInt(cur.total/active)+' /agent', 'contacts handled per agent'));
+  var totalAgents = DATA.overall.total_agents, active = DATA.overall.active_agents_latest;
+  wrap.appendChild(statTile('Total Agents (Roster)', totalAgents, 'full Personil roster, incl. supervisor '+DATA.overall.supervisor));
+  wrap.appendChild(statTile('Active Agents (Aug 2026)', active, (DATA.overall.active_agent_names||[]).join(', ')));
+  var hasAgent = cur.agent && Object.keys(cur.agent).length;
+  var wfAgentCount = state.period==='ALL' ? Object.keys(DATA.overall.agent_ytd).length : (hasAgent ? Object.keys(cur.agent).length : 0);
+  wrap.appendChild(statTile('Agent Productivity', wfAgentCount ? fmtInt(cur.ticket_total/wfAgentCount)+' tkt/agent' : '—', wfAgentCount ? 'human-handled tickets per agent active in period' : ('Agent-level data available for '+DETAIL_MONTHS.join(', '))));
+  wrap.appendChild(statTile('QA Score (Agustus 2026)', na(DATA.overall.qa_score)?'—':fmtPct(DATA.overall.qa_score,1), DATA.overall.qm_sample_count+' monitored interactions, single-month snapshot'));
 
-  var profiles = (cur.agent_profiles || DATA.overall.agent_profiles).slice().map(function(p){
-    var score = (100-Math.min(100,p.aht_sec/6)) *0.3 + p.qa_score*0.35 + p.schedule_adherence*0.2 + p.csat*0.15;
-    return Object.assign({score:score}, p);
+  /* Active-agent QA performance split (Agustus 2026 QM snapshot, period-independent) */
+  var ACTIVE_AGENT_KEYS = ['YUSRA MULO S','NURHOLIS','M. NIZHOMUL HAMDI','IIS SOPIATUROHMAH'];
+  var activeQA = ACTIVE_AGENT_KEYS.map(function(key){
+    var qa = (DATA.overall.agent_qa||{})[key];
+    return { key:key, name: agentDisplayName(key), qa_score: qa!=null ? qa*100 : null };
   });
-  profiles.sort(function(a,b){return b.score-a.score;});
-  var half = Math.ceil(profiles.length/2);
-  var top5 = profiles.slice(0, half), bottom5 = profiles.slice(half).reverse();
+  var scored = activeQA.filter(function(p){return p.qa_score!=null;}).sort(function(a,b){return b.qa_score-a.qa_score;});
+  var unscored = activeQA.filter(function(p){return p.qa_score==null;});
+  var topPerf = scored.slice(0,2);
+  var bottomPerf = scored.slice(2).sort(function(a,b){return a.qa_score-b.qa_score;});
 
-  function renderAgentList(containerId, list, color){
+  function renderQaList(containerId, list, color, noDataList){
     var el = document.getElementById(containerId);
     el.innerHTML='';
-    var max = Math.max.apply(null, list.map(function(p){return p.score;}));
+    if(!list.length && !(noDataList&&noDataList.length)){ el.innerHTML='<p style="font-size:12px;color:var(--ink-3);margin:0;">No data.</p>'; return; }
+    var max = 100;
     list.forEach(function(p, i){
       var row = document.createElement('div');
       row.className='agent-row';
       row.innerHTML = '<div class="agent-rank">'+(i+1)+'</div>'+
         '<div class="agent-name" title="'+p.name+'">'+p.name+'</div>'+
-        '<div class="agent-bar-wrap"><div class="agent-bar" style="width:'+(p.score/max*100)+'%;background:'+color+'"></div></div>'+
-        '<div class="agent-val">'+p.qa_score.toFixed(0)+' QA</div>';
+        '<div class="agent-bar-wrap"><div class="agent-bar" style="width:'+(p.qa_score/max*100)+'%;background:'+color+'"></div></div>'+
+        '<div class="agent-val">'+p.qa_score.toFixed(1)+'%</div>';
+      el.appendChild(row);
+    });
+    (noDataList||[]).forEach(function(p){
+      var row = document.createElement('div');
+      row.className='agent-row';
+      row.style.opacity='.55';
+      row.innerHTML = '<div class="agent-rank">&ndash;</div>'+
+        '<div class="agent-name" title="'+p.name+'">'+p.name+'</div>'+
+        '<div class="agent-bar-wrap"><div class="agent-bar" style="width:0%;background:'+color+'"></div></div>'+
+        '<div class="agent-val" style="width:auto;font-weight:600;">No QM data</div>';
       el.appendChild(row);
     });
   }
-  renderAgentList('agentTop5', top5, cv('--good'));
-  renderAgentList('agentBottom5', bottom5, cv('--warning'));
+  renderQaList('agentTop5', topPerf, cv('--good'), null);
+  renderQaList('agentBottom5', bottomPerf, cv('--warning'), unscored);
 }
 
 /* ============================================================
    RENDER: TOP CONTACT REASONS (Pareto, % based single axis)
    ============================================================ */
 function renderPareto(){
+  var canvasEl = document.getElementById('paretoChart');
+  if(!hasDetail(state.period)){
+    destroyChart('pareto');
+    canvasEl.style.display='none';
+    var noteEl = document.getElementById('paretoNote');
+    if(noteEl){ noteEl.style.display='block'; noteEl.textContent = 'Contact-reason detail requires raw ticket-level source data, only available for '+DETAIL_MONTHS.join(', ')+'. Select one of those months, or "All Period".'; }
+    return;
+  }
+  canvasEl.style.display='block';
+  var noteEl2 = document.getElementById('paretoNote');
+  if(noteEl2) noteEl2.style.display='none';
   var cur = getCurrent(state.period);
   var cats = Object.entries(cur.category||{}).sort(function(a,b){return b[1]-a[1];}).slice(0,8);
   var total = Object.values(cur.category||{}).reduce(function(a,b){return a+b;},0) || 1;
@@ -1308,16 +1380,19 @@ function renderPareto(){
    RENDER: QUALITY
    ============================================================ */
 function renderQuality(){
-  var cur = getCurrent(state.period);
-  var g = gaugeSvg(cur.qa_score*100, 130);
+  // QA/Quality Monitoring data has a real basis only for Agustus 2026 (PENILAIAN QM SCORE file,
+  // a single monthly assessment snapshot) — always show that snapshot regardless of period filter,
+  // clearly labeled, rather than fabricating a value for other months.
+  var qa = DATA.overall.qa_score, cer = DATA.overall.critical_error_rate, comp = DATA.overall.compliance_score;
+  var g = gaugeSvg(qa*100, 130);
   document.getElementById('qaGaugeWrap').innerHTML = g.svg;
 
   var stats = [
-    ['Critical Error Rate', fmtPct(cur.critical_error_rate,2), 'Target ≤ '+fmtPct(TARGETS.critical_error_rate,1)],
-    ['Compliance Score', fmtPct(cur.compliance_score,1), 'Target '+fmtPct(TARGETS.compliance_score,0)],
-    ['Call Monitoring Count', fmtInt(Math.round((cur.ticket_total||cur.total)*0.06)), 'sampled evaluations'],
-    ['Coaching Completion', fmtPct(cur.coaching_completion,1), 'Target '+fmtPct(TARGETS.coaching_completion,0)],
-    ['Repeat Error Rate', fmtPct(cur.repeat_error_rate,2), 'Target ≤ '+fmtPct(TARGETS.repeat_error_rate,1)],
+    ['Critical Error Rate', fmtPct(cer,2), 'Target ≤ '+fmtPct(TARGETS.critical_error_rate,1)+' · n='+DATA.overall.qm_sample_count],
+    ['Compliance Score', fmtPct(comp,1), 'Target '+fmtPct(TARGETS.compliance_score,0)],
+    ['Monitored Interactions', fmtInt(DATA.overall.qm_sample_count), 'QM-evaluated calls & chats, Agustus 2026'],
+    ['Sosmed QM Score', fmtPct(DATA.overall.qa_score_sosmed,1), 'WhatsApp + Email channel'],
+    ['Voice QM Score', fmtPct(DATA.overall.qa_score_voice,1), 'Inbound call channel'],
   ];
   var wrap = document.getElementById('qualityStats');
   wrap.innerHTML = stats.map(function(s){
@@ -1328,12 +1403,14 @@ function renderQuality(){
 
   destroyChart('qualityTrend');
   var ctx = document.getElementById('qualityTrend').getContext('2d');
-  var qaData = MONTHS.map(function(m){return DATA.monthly[m].qa_score*100;});
+  var bd = DATA.overall.qa_breakdown;
+  var labels = ['Customer-Affecting','Business-Affecting','Compliance-Affecting','Non-Critical'];
+  var vals = [bd.customer_affecting, bd.business_affecting, bd.compliance_affecting, bd.non_critical_error].map(function(v){return v*100;});
   charts.qualityTrend = new Chart(ctx, {
-    type:'line',
-    data:{ labels:MONTHS, datasets:[{ data:qaData, borderColor:cv('--c-inbound'), backgroundColor:cv('--c-inbound')+'22', fill:true, tension:.35, pointRadius:3, pointBackgroundColor:cv('--c-inbound') }] },
-    options:{ responsive:true, maintainAspectRatio:true, plugins:{legend:{display:false}, tooltip:{callbacks:{label:function(c){return 'QA '+c.parsed.y.toFixed(1)+'%';}}}},
-      scales:{ x:{grid:{display:false}, ticks:{color:cv('--ink-3'), font:{size:10}}}, y:{display:false, suggestedMin:80, suggestedMax:100} } }
+    type:'bar',
+    data:{ labels:labels, datasets:[{ label:'Pass rate', data:vals, backgroundColor:[cv('--c-inbound'),cv('--c-inbound'),cv('--c-inbound'),cv('--ink-3')], borderRadius:4, maxBarThickness:26 }] },
+    options:{ responsive:true, maintainAspectRatio:true, plugins:{legend:{display:false}, tooltip:{callbacks:{label:function(c){return c.parsed.y.toFixed(1)+'% pass rate';}}}},
+      scales:{ x:{grid:{display:false}, ticks:{color:cv('--ink-3'), font:{size:9}}}, y:{suggestedMin:60, suggestedMax:100, ticks:{color:cv('--ink-3')}, grid:{color:cv('--border')}} } }
   });
 }
 
@@ -1404,16 +1481,22 @@ function renderInsights(){
     insights.push('Contact volume '+(volDelta>=0?'increased':'decreased')+' <b>'+Math.abs(volDelta*100).toFixed(1)+'%</b> compared with the prior period ('+prevInfo.label.replace('vs ','')+'), closing at <b>'+fmtInt(cur.total)+'</b> interactions.');
     var slDelta = cur.call_sl-prev.call_sl;
     insights.push('Service Level '+(slDelta>=0?'held steady or improved':'softened')+' to <b>'+fmtPct(cur.call_sl,1)+'</b> ('+(slDelta>=0?'+':'')+(slDelta*100).toFixed(1)+'pt), '+(cur.call_sl>=TARGETS.sl?'remaining above':'slipping below')+' the '+fmtPct(TARGETS.sl,0)+' target.');
-    var ahtDelta = (cur.aht_ticket_sec-prev.aht_ticket_sec)/prev.aht_ticket_sec;
-    insights.push('AHT '+(ahtDelta<=0?'improved':'increased')+' by <b>'+Math.abs(ahtDelta*100).toFixed(1)+'%</b> to '+fmtSec(cur.aht_ticket_sec)+', '+(ahtDelta<=0?'indicating better agent efficiency':'suggesting rising case complexity or resourcing pressure')+'.');
+    if(!na(cur.aht_ticket_sec) && !na(prev.aht_ticket_sec)){
+      var ahtDelta = (cur.aht_ticket_sec-prev.aht_ticket_sec)/prev.aht_ticket_sec;
+      insights.push('AHT (ticket, median) '+(ahtDelta<=0?'improved':'increased')+' by <b>'+Math.abs(ahtDelta*100).toFixed(1)+'%</b> to '+fmtSec(cur.aht_ticket_sec)+', '+(ahtDelta<=0?'indicating better agent efficiency':'suggesting rising case complexity or resourcing pressure')+'. (AHT-ticket detail available for '+DETAIL_MONTHS.join(', ')+'.)');
+    }
   } else {
     insights.push('This is the first month in the tracked period, so no prior-month comparison is available; volume opened at <b>'+fmtInt(cur.total)+'</b> interactions with Service Level at <b>'+fmtPct(cur.call_sl,1)+'</b>.');
   }
-  var csatDelta = prev ? cur.csat-prev.csat : null;
-  insights.push('CSAT stands at <b>'+fmtPct(cur.csat,1)+'</b>'+(csatDelta!=null?' ('+(csatDelta>=0?'+':'')+(csatDelta*100).toFixed(1)+'pt vs prior period)':'')+' despite '+(prev && cur.total>prev.total ? 'higher contact volume' : 'steady demand')+', pointing to resilient service quality.');
-  var topGroup = Object.entries(groupChannelMap(cur)).map(function(e){return [e[0], e[1].whatsapp+e[1].email+e[1].inbound];}).sort(function(a,b){return b[1]-a[1];})[0];
-  insights.push('<b>'+titleCase(topGroup[0])+'</b> is the top contact-generating Direktorat Jenderal this period at '+fmtInt(topGroup[1])+' interactions, warranting closer coordination on recurring service topics.');
-  insights.push('Peak demand concentrates around <b>'+Object.entries(DATA.overall.hour_dist).sort(function(a,b){return b[1]-a[1];})[0][0]+':00</b> and on <b>'+Object.entries(DATA.overall.dow_dist).sort(function(a,b){return b[1]-a[1];})[0][0]+'s</b> — additional staffing during these windows would directly relieve Service Level pressure.');
+  var fcrDelta = prev ? cur.fcr-prev.fcr : null;
+  insights.push('FCR (First Contact Resolution, based on Unit N-FCR / escalation registers) stands at <b>'+fmtPct(cur.fcr,1)+'</b>'+(fcrDelta!=null?' ('+(fcrDelta>=0?'+':'')+(fcrDelta*100).toFixed(1)+'pt vs prior period)':'')+', with <b>'+fmtInt(cur.nfcr_total)+'</b> cases requiring escalation beyond first contact this period.');
+  if(hasDetail(state.period)){
+    var topGroup = Object.entries(groupChannelMap(cur)).map(function(e){return [e[0], e[1].whatsapp+e[1].email+e[1].inbound];}).sort(function(a,b){return b[1]-a[1];})[0];
+    insights.push('<b>'+titleCase(topGroup[0])+'</b> is the top contact-generating Direktorat Jenderal this period at '+fmtInt(topGroup[1])+' interactions, warranting closer coordination on recurring service topics.');
+    insights.push('Peak demand (based on ticket timestamps for '+DETAIL_MONTHS.join('/')+') concentrates around <b>'+Object.entries(DATA.overall.hour_dist).sort(function(a,b){return b[1]-a[1];})[0][0]+':00</b> and on <b>'+Object.entries(DATA.overall.dow_dist).sort(function(a,b){return b[1]-a[1];})[0][0]+'s</b> — additional staffing during these windows would directly relieve Service Level pressure.');
+  } else {
+    insights.push('Unit-level (Direktorat Jenderal) and hour/day demand breakdowns require raw ticket-level data, only available for '+DETAIL_MONTHS.join(', ')+'. Select one of those months, or "All Period", to see these breakdowns.');
+  }
 
   var wrap = document.getElementById('insightList');
   wrap.innerHTML='';
@@ -1424,10 +1507,10 @@ function renderInsights(){
   });
 
   var actions = [
-    'Increase staffing capacity around the '+Object.entries(DATA.overall.hour_dist).sort(function(a,b){return b[1]-a[1];})[0][0]+':00 peak window and on '+Object.entries(DATA.overall.dow_dist).sort(function(a,b){return b[1]-a[1];})[0][0]+'s to protect Service Level during demand spikes.',
-    'Improve knowledge management and macro/script coverage for <b>'+titleCase(Object.entries(cur.category||{}).sort(function(a,b){return b[1]-a[1];})[0][0])+'</b> requests, the leading contact driver, to reduce AHT.',
-    'Run targeted coaching for agents below the QA and schedule-adherence benchmarks flagged in Workforce Performance.',
-    'Deepen coordination with <b>'+titleCase(Object.entries(groupChannelMap(cur)).map(function(e){return [e[0], e[1].whatsapp+e[1].email+e[1].inbound];}).sort(function(a,b){return b[1]-a[1];})[0][0])+'</b> on recurring service topics driving the highest ticket volume.',
+    'Increase staffing capacity around the '+Object.entries(DATA.overall.hour_dist).sort(function(a,b){return b[1]-a[1];})[0][0]+':00 peak window and on '+Object.entries(DATA.overall.dow_dist).sort(function(a,b){return b[1]-a[1];})[0][0]+'s (based on '+DETAIL_MONTHS.join('/')+' ticket timestamps) to protect Service Level during demand spikes.',
+    (hasDetail(state.period) && cur.category) ? ('Improve knowledge management and macro/script coverage for <b>'+titleCase(Object.entries(cur.category).sort(function(a,b){return b[1]-a[1];})[0][0])+'</b> requests, the leading contact driver, to reduce AHT.') : 'Improve knowledge management and macro/script coverage for the leading contact-driver categories identified in months with ticket-level detail ('+DETAIL_MONTHS.join(', ')+').',
+    'Reinforce the QM rubric areas scoring below target in the Agustus 2026 assessment (see Quality &amp; Compliance panel) through targeted coaching.',
+    (hasDetail(state.period) && cur.ticketgroup_channel) ? ('Deepen coordination with <b>'+titleCase(Object.entries(groupChannelMap(cur)).map(function(e){return [e[0], e[1].whatsapp+e[1].email+e[1].inbound];}).sort(function(a,b){return b[1]-a[1];})[0][0])+'</b> on recurring service topics driving the highest ticket volume.') : 'Deepen coordination with the top ticket-generating Direktorat Jenderal units identified in months with ticket-level detail.',
     'Strengthen WhatsApp self-service (chatbot deflection) and digital channels, since WhatsApp already carries '+fmtPct(cur.whatsapp/cur.total,0)+' of total volume and further deflection frees agent capacity for complex cases.',
   ];
   var awrap = document.getElementById('actionList');
